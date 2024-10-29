@@ -1,0 +1,51 @@
+2024-10-28 16:35:12,110 external pers INFO Script to update external persons in pure from ricgraph has started
+2024-10-28 16:35:12,111 external pers INFO Test run =  yes
+2024-10-28 16:35:12,111 external pers INFO start fetching person-roots for uu faculty: information & technology services|organization_name
+2024-10-28 16:35:12,202 external pers INFO Processing faculty: uu faculty: information & technology services|organization_name
+2024-10-28 16:35:12,346 external pers INFO Processing internal persons: 4
+2024-10-28 16:35:12,996 external pers INFO total pubs found in Ricgraph: 3
+2024-10-28 16:35:12,996 external pers INFO start fetching research outputs from pure
+2024-10-28 16:35:13,547 external pers INFO Total matching research outputs found: 3
+2024-10-28 16:35:13,551 external pers INFO JSON data successfully saved to research_outputs.json
+2024-10-28 16:35:13,551 external pers INFO end fetching pure
+2024-10-28 16:35:13,552 external pers INFO start fetching open alex
+2024-10-28 16:35:13,949 external pers INFO end fetching open alex
+2024-10-28 16:35:13,950 external pers INFO total persons matched: 5
+2024-10-28 16:35:13,950 external pers INFO start fetching external persons from pure
+2024-10-28 16:35:14,970 external pers INFO end fetching pure
+2024-10-28 16:35:14,970 external pers INFO Matching external persons found: 4
+2024-10-28 16:35:14,971 external pers INFO start updating external persons from pure
+2024-10-28 16:35:14,972 external pers INFO end updating external persons from pure
+2024-10-28 16:35:14,972 external pers INFO total external persons updated: 0
+2024-10-28 16:35:14,972 external pers INFO total external persons not updated (already has ids, or no ids found): 5
+2024-10-28 16:35:14,972 external pers INFO Script has ended
+2024-10-28 16:38:00,886 external pers INFO Script to update external persons in pure from ricgraph has started
+2024-10-28 16:38:00,886 external orgs INFO Script to update external organisations in pure from ricgraph has started
+2024-10-28 16:38:00,887 root INFO start fetching person-roots for uu faculty: information & technology services|organization_name
+2024-10-28 16:38:00,887 root INFO Test run =  yes
+2024-10-28 16:38:00,981 root INFO Processing faculty: uu faculty: information & technology services|organization_name
+2024-10-28 16:38:01,626 external pers INFO Script to update external persons in pure from ricgraph has started
+2024-10-28 16:38:01,626 external orgs INFO Script to update external organisations in pure from ricgraph has started
+2024-10-28 16:38:01,627 root INFO start fetching person-roots for uu faculty: information & technology services|organization_name
+2024-10-28 16:38:01,627 root INFO Test run =  yes
+2024-10-28 16:38:01,754 root INFO Processing faculty: uu faculty: information & technology services|organization_name
+2024-10-28 16:38:01,931 root INFO total research output with external persons selected:  3
+2024-10-28 16:38:01,931 external pers INFO start fetching research outputs from pure
+2024-10-28 16:38:02,513 external pers INFO Total matching research outputs found: 3
+2024-10-28 16:38:02,515 external pers INFO JSON data successfully saved to research_outputs.json
+2024-10-28 16:38:02,515 external pers INFO end fetching pure
+2024-10-28 16:38:02,515 external pers INFO start fetching open alex
+2024-10-28 16:38:02,517 root INFO total research output with external persons selected:  3
+2024-10-28 16:38:02,517 external pers INFO start fetching research outputs from pure
+2024-10-28 16:38:02,848 external pers INFO end fetching open alex
+2024-10-28 16:38:02,849 external orgs INFO start fetching external orgs from pure
+2024-10-28 16:38:03,016 external pers INFO Total matching research outputs found: 3
+2024-10-28 16:38:03,019 external pers INFO JSON data successfully saved to research_outputs.json
+2024-10-28 16:38:03,019 external pers INFO end fetching pure
+2024-10-28 16:38:03,020 external pers INFO start fetching open alex
+2024-10-28 16:38:03,139 external orgs INFO Total matching external orgs found: 1
+2024-10-28 16:38:03,346 external pers INFO end fetching open alex
+2024-10-28 16:38:03,346 external orgs INFO start fetching external orgs from pure
+2024-10-28 16:38:03,736 external orgs INFO Total matching external orgs found: 1
+2024-10-28 16:38:03,963 root INFO nr of ext orgs updated: 1
+2024-10-28 16:38:04,558 root INFO nr of ext orgs updated: 1

@@ -1,0 +1,6 @@
+2024-10-28 16:35:53,076 dataset INFO Script to update datasets in pure from ricgraph has started
+2024-10-28 16:35:53,169 dataset INFO Processing faculty: uu faculty: information & technology services|organization_name
+2024-10-28 16:35:53,994 dataset INFO datasets found in ricgraph: 0
+2024-10-28 16:35:53,995 dataset INFO datasets found in open alex: 0
+2024-10-28 16:35:53,995 dataset INFO downloaded datasets in: datasets.xlsx
+2024-10-28 16:35:54,072 dataset INFO Process completed. created datasets: 0, skipped: 0

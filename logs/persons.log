@@ -1,0 +1,6 @@
+2024-10-28 16:37:15,015 external pers INFO Script to update external persons in pure from ricgraph has started
+2024-10-28 16:37:15,022 update_researchoutput_from_ricgraph INFO Script to update researchoutput in pure from ricgraph has started
+2024-10-28 16:37:15,114 root INFO Processing faculty: uu faculty: information & technology services|organization_name
+2024-10-28 16:37:15,913 external pers INFO start fetching open alex
+2024-10-28 16:37:15,913 external pers INFO end fetching open alex
+2024-10-28 16:37:15,913 update_researchoutput_from_ricgraph INFO Script to update researchoutput in pure from ricgraph has ended

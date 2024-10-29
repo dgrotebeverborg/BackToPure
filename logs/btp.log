@@ -1,0 +1,49 @@
+2024-10-29 11:19:23,239 btp INFO Script to update researchoutput in pure from ricgraph has started
+2024-10-29 11:19:23,307 btp INFO Processing faculty: uu faculty: faculteit geesteswetenschappen|organization_name
+2024-10-29 11:22:19,114 btp INFO total research output selected in ricgraph:  395
+2024-10-29 11:22:19,114 btp INFO research output selected in ricgraph, not in pure:  45
+2024-10-29 11:22:19,115 btp INFO start fetching open alex
+2024-10-29 11:22:20,293 btp INFO Total number of works fetched: 43
+2024-10-29 11:22:20,293 btp INFO End fetching from OpenAlex
+2024-10-29 11:22:20,300 root INFO Publication ID https://openalex.org/W4319602633 not processed. Missing fields: contributors
+2024-10-29 11:24:16,255 btp INFO Script to update researchoutput in pure from ricgraph has started
+2024-10-29 11:24:16,324 btp INFO Processing faculty: uu faculty: faculteit sociale wetenschappen|organization_name
+2024-10-29 11:26:40,809 btp INFO total research output selected in ricgraph:  761
+2024-10-29 11:26:40,809 btp INFO research output selected in ricgraph, not in pure:  129
+2024-10-29 11:26:40,810 btp INFO start fetching open alex
+2024-10-29 11:26:43,770 btp INFO Total number of works fetched: 124
+2024-10-29 11:26:43,770 btp INFO End fetching from OpenAlex
+2024-10-29 11:26:43,865 btp INFO data transformed: 117
+2024-10-29 11:29:37,019 btp INFO Script to update researchoutput in pure from ricgraph has started
+2024-10-29 11:29:37,095 btp INFO Processing faculty: uu faculty: faculteit sociale wetenschappen|organization_name
+2024-10-29 11:32:14,157 btp INFO total research output selected in ricgraph:  761
+2024-10-29 11:32:14,157 btp INFO research output selected in ricgraph, not in pure:  129
+2024-10-29 11:32:14,157 btp INFO start fetching open alex
+2024-10-29 11:32:15,336 btp INFO Total number of works fetched: 124
+2024-10-29 11:32:15,336 btp INFO End fetching from OpenAlex
+2024-10-29 11:32:15,447 btp INFO data transformed: 117
+2024-10-29 11:33:48,774 btp INFO 1: errors, see log for more info
+2024-10-29 11:33:48,774 btp INFO 49: successes
+2024-10-29 11:33:48,774 btp INFO 65: already in pure
+2024-10-29 11:33:48,775 btp INFO Script to update researchoutput in pure from ricgraph has ended
+2024-10-29 11:34:27,568 btp INFO Script to update researchoutput in pure from ricgraph has started
+2024-10-29 11:34:27,640 btp INFO Processing faculty: uu faculty: faculteit geesteswetenschappen|organization_name
+2024-10-29 11:36:55,819 btp INFO 1: errors, see log for more info
+2024-10-29 11:36:55,819 btp INFO 49: successes
+2024-10-29 11:36:55,819 btp INFO 65: already in pure
+2024-10-29 11:36:55,819 btp INFO Script to update researchoutput in pure from ricgraph has ended
+2024-10-29 11:37:23,603 btp INFO total research output selected in ricgraph:  395
+2024-10-29 11:37:23,604 btp INFO research output selected in ricgraph, not in pure:  45
+2024-10-29 11:37:23,604 btp INFO start fetching open alex
+2024-10-29 11:37:24,493 btp INFO Total number of works fetched: 43
+2024-10-29 11:37:24,493 btp INFO End fetching from OpenAlex
+2024-10-29 11:37:24,500 root INFO Publication ID https://openalex.org/W4319602633 not processed. Missing fields: contributors
+2024-10-29 11:37:24,570 btp INFO data transformed: 42
+2024-10-29 11:37:38,520 btp INFO created researchoutput: 201 
+2024-10-29 11:38:31,564 btp INFO created researchoutput: 201 
+2024-10-29 11:38:54,092 btp INFO created researchoutput: 201 
+2024-10-29 11:38:56,856 btp INFO created researchoutput: 201 
+2024-10-29 11:38:59,416 btp INFO False: errors, see log for more info
+2024-10-29 11:38:59,417 btp INFO 4: successes
+2024-10-29 11:38:59,417 btp INFO 36: already in pure
+2024-10-29 11:38:59,417 btp INFO Script to update researchoutput in pure from ricgraph has ended
