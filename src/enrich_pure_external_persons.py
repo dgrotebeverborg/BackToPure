@@ -47,7 +47,7 @@ from urllib3.util.retry import Retry
 import urllib3
 from config import PURE_BASE_URL, PURE_API_KEY, EMAIL, RIC_BASE_URL, OPENALEXEX_ID_URI, ORCID_ID_URI, OPENALEX_HEADERS
 
-logger = setup_logging('btp', level=logging.DEBUG)
+logger = setup_logging('btp', level=logging.INFO)
 headers = {
     'Accept': 'application/json',
     'api-key': PURE_API_KEY,

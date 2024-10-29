@@ -1,0 +1,470 @@
+[
+    {
+        "pureId": 60217884,
+        "uuid": "a303042d-c2d4-406f-8077-b4df24aaf7aa",
+        "createdBy": "sync_user",
+        "createdDate": "2019-01-02T02:21:54+01:00",
+        "modifiedBy": "sync_user",
+        "modifiedDate": "2024-10-10T02:23:43.319+02:00",
+        "portalUrl": "https://staging.research-portal.uu.nl/en/persons/a303042d-c2d4-406f-8077-b4df24aaf7aa",
+        "version": "7e628f84f413e1d5fd83021d55dfbcc40b743f18",
+        "name": {
+            "firstName": "U.",
+            "lastName": "Aksu"
+        },
+        "names": [
+            {
+                "pureId": 92103186,
+                "name": {
+                    "firstName": "\u00dcnal",
+                    "lastName": "Aksu"
+                },
+                "type": {
+                    "uri": "/dk/atira/pure/person/names/knownas",
+                    "term": {
+                        "en_GB": "Known as name"
+                    }
+                }
+            },
+            {
+                "pureId": 92103187,
+                "name": {
+                    "lastName": "Aksu U"
+                },
+                "type": {
+                    "uri": "/dk/atira/pure/person/names/sort",
+                    "term": {
+                        "en_GB": "Sort name"
+                    }
+                }
+            }
+        ],
+        "staffOrganizationAssociations": [
+            {
+                "typeDiscriminator": "StaffOrganizationAssociation",
+                "pureId": 187065141,
+                "affiliationId": "",
+                "employmentType": {
+                    "uri": "/dk/atira/pure/person/employmenttypes/oenoo",
+                    "term": {
+                        "en_GB": "Support staff"
+                    }
+                },
+                "organization": {
+                    "systemName": "Organization",
+                    "uuid": "8d963bb6-accc-4639-8198-13964d699acd"
+                },
+                "period": {
+                    "startDate": "2021-11-18"
+                },
+                "primaryAssociation": false,
+                "staffType": {
+                    "uri": "/dk/atira/pure/person/personstafftype/nonacademic",
+                    "term": {
+                        "en_GB": "Non-academic"
+                    }
+                }
+            },
+            {
+                "typeDiscriminator": "StaffOrganizationAssociation",
+                "pureId": 67791792,
+                "affiliationId": "50045496",
+                "employmentType": {
+                    "uri": "/dk/atira/pure/person/employmenttypes/004",
+                    "term": {
+                        "en_GB": "Researcher"
+                    }
+                },
+                "organization": {
+                    "systemName": "Organization",
+                    "uuid": "8b59fe39-019c-4f3c-9c54-eb97d0ccc541"
+                },
+                "period": {
+                    "startDate": "2019-12-01",
+                    "endDate": "2021-11-17"
+                },
+                "primaryAssociation": false,
+                "jobTitle": {
+                    "uri": "/dk/atira/pure/person/jobtitles/50017874",
+                    "term": {
+                        "en_GB": "Researcher"
+                    }
+                },
+                "staffType": {
+                    "uri": "/dk/atira/pure/person/personstafftype/academic",
+                    "term": {
+                        "en_GB": "Academic"
+                    }
+                }
+            },
+            {
+                "typeDiscriminator": "StaffOrganizationAssociation",
+                "pureId": 60217889,
+                "affiliationId": "50045496",
+                "employmentType": {
+                    "uri": "/dk/atira/pure/person/employmenttypes/005",
+                    "term": {
+                        "en_GB": "PhD Candidate"
+                    }
+                },
+                "organization": {
+                    "systemName": "Organization",
+                    "uuid": "8b59fe39-019c-4f3c-9c54-eb97d0ccc541"
+                },
+                "period": {
+                    "startDate": "2019-01-01",
+                    "endDate": "2019-11-30"
+                },
+                "primaryAssociation": false,
+                "jobTitle": {
+                    "uri": "/dk/atira/pure/person/jobtitles/50017890",
+                    "term": {
+                        "en_GB": "PhD Candidate"
+                    }
+                },
+                "staffType": {
+                    "uri": "/dk/atira/pure/person/personstafftype/academic",
+                    "term": {
+                        "en_GB": "Academic"
+                    }
+                }
+            }
+        ],
+        "profilePhotos": [
+            {
+                "pureId": 232295408,
+                "fileId": "MDBkZDg4YmYw",
+                "fileName": "GetImage?Employee=49725.jpg",
+                "mimeType": "image/jpeg",
+                "size": 25729,
+                "url": "https://staging.research-portal.uu.nl/ws/api/persons/a303042d-c2d4-406f-8077-b4df24aaf7aa/files/MDBkZDg4YmYw/GetImage%3FEmployee=49725.jpg",
+                "type": {
+                    "uri": "/dk/atira/pure/person/personfiles/portrait",
+                    "term": {
+                        "en_GB": "Portrait"
+                    }
+                }
+            }
+        ],
+        "profileInformation": [
+            {
+                "pureId": 232295409,
+                "value": {
+                    "en_GB": "<br/>"
+                },
+                "type": {
+                    "uri": "/dk/atira/pure/person/customfields/profiel_eng",
+                    "term": {
+                        "en_GB": "About"
+                    }
+                }
+            },
+            {
+                "pureId": 232295410,
+                "value": {
+                    "en_GB": "<a href=\"https://www.uu.nl/medewerkers/UAksu\">https://www.uu.nl/medewerkers/UAksu</a>"
+                },
+                "type": {
+                    "uri": "/dk/atira/pure/person/customfields/profiel_url",
+                    "term": {
+                        "en_GB": "Link to personal page"
+                    }
+                }
+            }
+        ],
+        "gender": {
+            "uri": "/dk/atira/pure/person/gender/unknown",
+            "term": {
+                "en_GB": "Unknown"
+            }
+        },
+        "titles": [
+            {
+                "pureId": 113145537,
+                "value": {
+                    "en_GB": "dr."
+                },
+                "type": {
+                    "uri": "/dk/atira/pure/person/titles/generic",
+                    "term": {
+                        "en_GB": "Title"
+                    }
+                }
+            }
+        ],
+        "visibility": {
+            "key": "FREE",
+            "description": {
+                "en_GB": "Public - No restriction"
+            }
+        },
+        "identifiers": [
+            {
+                "typeDiscriminator": "PrimaryId",
+                "idSource": "synchronisedUnifiedPerson",
+                "value": "AKSU0005"
+            },
+            {
+                "typeDiscriminator": "ClassifiedId",
+                "pureId": 92103188,
+                "id": "AKSU0005",
+                "type": {
+                    "uri": "/dk/atira/pure/person/personsources/employee",
+                    "term": {
+                        "en_GB": "Employee ID"
+                    }
+                }
+            },
+            {
+                "typeDiscriminator": "ClassifiedId",
+                "pureId": 229428809,
+                "id": "0000000492833834",
+                "type": {
+                    "uri": "/dk/atira/pure/person/personsources/isni",
+                    "term": {
+                        "en_GB": "ISNI"
+                    }
+                }
+            },
+            {
+                "typeDiscriminator": "ClassifiedId",
+                "pureId": 229428810,
+                "id": "57193055950",
+                "type": {
+                    "uri": "/dk/atira/pure/person/personsources/scopusauthor",
+                    "term": {
+                        "en_GB": "Scopus Author ID"
+                    }
+                }
+            }
+        ],
+        "user": {
+            "systemName": "User",
+            "uuid": "a9fd0716-249a-41ef-bb28-21e12cc4a7fc"
+        },
+        "customDefinedFields": {},
+        "systemName": "Person"
+    },
+    {
+        "pureId": 91952415,
+        "uuid": "79debb11-b371-448d-8323-3f68ae9f3d1a",
+        "createdBy": "SIEVE002",
+        "createdDate": "2021-03-04T18:51:35.568+01:00",
+        "modifiedBy": "GROTE004",
+        "modifiedDate": "2024-09-02T13:57:58.225+02:00",
+        "portalUrl": "https://staging.research-portal.uu.nl/en/persons/79debb11-b371-448d-8323-3f68ae9f3d1a",
+        "version": "65ed5b57966fb81520b4f32afd1162756a1a643f",
+        "keywordGroups": [
+            {
+                "typeDiscriminator": "ClassificationsKeywordGroup",
+                "pureId": 225434136,
+                "logicalName": "sustainabledevelopmentgoals",
+                "name": {
+                    "en_GB": "Sustainable Development Goals"
+                },
+                "classifications": [
+                    {
+                        "uri": "/dk/atira/pure/sustainabledevelopmentgoals/sustainable_cities_and_communities",
+                        "term": {
+                            "en_GB": "SDG 11 - Sustainable Cities and Communities"
+                        }
+                    }
+                ]
+            }
+        ],
+        "name": {
+            "firstName": "Jonathan",
+            "lastName": "de Bruin"
+        },
+        "orcid": "0000-0002-4297-0502",
+        "staffOrganizationAssociations": [
+            {
+                "typeDiscriminator": "StaffOrganizationAssociation",
+                "pureId": 91959223,
+                "employmentType": {
+                    "uri": "/dk/atira/pure/person/employmenttypes/oenoo",
+                    "term": {
+                        "en_GB": "Support staff"
+                    }
+                },
+                "organization": {
+                    "systemName": "Organization",
+                    "uuid": "8d963bb6-accc-4639-8198-13964d699acd"
+                },
+                "period": {
+                    "startDate": "2017-03-01"
+                },
+                "primaryAssociation": false,
+                "staffType": {
+                    "uri": "/dk/atira/pure/person/personstafftype/nonacademic",
+                    "term": {
+                        "en_GB": "Non-academic"
+                    }
+                }
+            }
+        ],
+        "gender": {
+            "uri": "/dk/atira/pure/person/gender/unknown",
+            "term": {
+                "en_GB": "Unknown"
+            }
+        },
+        "titles": [
+            {
+                "pureId": 91952447,
+                "value": {
+                    "en_GB": "MSc"
+                },
+                "type": {
+                    "uri": "/dk/atira/pure/person/titles/postnominal",
+                    "term": {
+                        "en_GB": "Post-nominal title"
+                    }
+                }
+            }
+        ],
+        "visibility": {
+            "key": "FREE",
+            "description": {
+                "en_GB": "Public - No restriction"
+            }
+        },
+        "identifiers": [
+            {
+                "typeDiscriminator": "ClassifiedId",
+                "pureId": 91952446,
+                "id": "BRUIN056",
+                "type": {
+                    "uri": "/dk/atira/pure/person/personsources/employee",
+                    "term": {
+                        "en_GB": "Employee ID"
+                    }
+                }
+            },
+            {
+                "typeDiscriminator": "ClassifiedId",
+                "pureId": 229428748,
+                "id": "A5027479191",
+                "type": {
+                    "uri": "/dk/atira/pure/person/personsources/open_alex_id",
+                    "term": {
+                        "en_GB": "Open Alex ID"
+                    }
+                }
+            },
+            {
+                "typeDiscriminator": "ClassifiedId",
+                "pureId": 229428749,
+                "id": "57203285222",
+                "type": {
+                    "uri": "/dk/atira/pure/person/personsources/scopusauthor",
+                    "term": {
+                        "en_GB": "Scopus Author ID"
+                    }
+                }
+            }
+        ],
+        "user": {
+            "systemName": "User",
+            "uuid": "9e41d63e-bd38-4fec-9d5a-33ee19d230b4"
+        },
+        "customDefinedFields": {},
+        "systemName": "Person"
+    },
+    {
+        "pureId": 218322562,
+        "uuid": "56149a39-9ed6-439d-be97-da22b1098561",
+        "createdBy": "SIEVE002",
+        "createdDate": "2024-03-26T12:59:37.174+01:00",
+        "modifiedBy": "root",
+        "modifiedDate": "2024-09-06T20:02:33.867+02:00",
+        "portalUrl": "https://staging.research-portal.uu.nl/en/persons/56149a39-9ed6-439d-be97-da22b1098561",
+        "version": "ef21a185d716c109ee6ea0e5561ae3778722bfcb",
+        "keywordGroups": [
+            {
+                "typeDiscriminator": "ClassificationsKeywordGroup",
+                "pureId": 230652784,
+                "logicalName": "sustainabledevelopmentgoals",
+                "name": {
+                    "en_GB": "Sustainable Development Goals"
+                },
+                "classifications": [
+                    {
+                        "uri": "/dk/atira/pure/sustainabledevelopmentgoals/good_health_and_well_being",
+                        "term": {
+                            "en_GB": "SDG 3 - Good Health and Well-being"
+                        }
+                    },
+                    {
+                        "uri": "/dk/atira/pure/sustainabledevelopmentgoals/life_below_water",
+                        "term": {
+                            "en_GB": "SDG 14 - Life Below Water"
+                        }
+                    }
+                ]
+            }
+        ],
+        "name": {
+            "firstName": "Arjan",
+            "lastName": "Sieverink"
+        },
+        "staffOrganizationAssociations": [
+            {
+                "typeDiscriminator": "StaffOrganizationAssociation",
+                "pureId": 218322591,
+                "affiliationId": "",
+                "employmentType": {
+                    "uri": "/dk/atira/pure/person/employmenttypes/oenoo",
+                    "term": {
+                        "en_GB": "Support staff"
+                    }
+                },
+                "organization": {
+                    "systemName": "Organization",
+                    "uuid": "8d963bb6-accc-4639-8198-13964d699acd"
+                },
+                "period": {
+                    "startDate": "2017-07-01"
+                },
+                "primaryAssociation": false,
+                "staffType": {
+                    "uri": "/dk/atira/pure/person/personstafftype/nonacademic",
+                    "term": {
+                        "en_GB": "Non-academic"
+                    }
+                }
+            }
+        ],
+        "gender": {
+            "uri": "/dk/atira/pure/person/gender/unknown",
+            "term": {
+                "en_GB": "Unknown"
+            }
+        },
+        "visibility": {
+            "key": "FREE",
+            "description": {
+                "en_GB": "Public - No restriction"
+            }
+        },
+        "identifiers": [
+            {
+                "typeDiscriminator": "ClassifiedId",
+                "pureId": 218322668,
+                "id": "SIEVE002",
+                "type": {
+                    "uri": "/dk/atira/pure/person/personsources/employee",
+                    "term": {
+                        "en_GB": "Employee ID"
+                    }
+                }
+            }
+        ],
+        "user": {
+            "systemName": "User",
+            "uuid": "5bbff9ba-9f29-4535-af5a-4d2f3a151a01"
+        },
+        "customDefinedFields": {},
+        "systemName": "Person"
+    }
+]
