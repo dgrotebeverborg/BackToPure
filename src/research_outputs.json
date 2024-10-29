@@ -1,0 +1,995 @@
+{
+    "results": [
+        {
+            "typeDiscriminator": "ContributionToJournal",
+            "pureId": 230703968,
+            "uuid": "fc39f815-b161-48e8-847b-ab8305470738",
+            "createdBy": "GROTE004",
+            "createdDate": "2024-09-09T10:45:01.312+02:00",
+            "modifiedBy": "root",
+            "modifiedDate": "2024-09-10T04:01:02.919+02:00",
+            "portalUrl": "https://staging.research-portal.uu.nl/en/publications/fc39f815-b161-48e8-847b-ab8305470738",
+            "version": "c1bbc5f03145718d42de4dcbf14bc248f1d6c3c4",
+            "title": {
+                "value": "Performance of active learning models for screening prioritization in systematic reviews: a simulation study into the Average Time to Discover relevant records"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article",
+                "term": {
+                    "en_GB": "Article"
+                }
+            },
+            "category": {
+                "uri": "/dk/atira/pure/researchoutput/category/academic",
+                "term": {
+                    "en_GB": "Academic"
+                }
+            },
+            "peerReview": true,
+            "publicationStatuses": [
+                {
+                    "pureId": 230704008,
+                    "current": true,
+                    "publicationStatus": {
+                        "uri": "/dk/atira/pure/researchoutput/status/published",
+                        "term": {
+                            "en_GB": "Published"
+                        }
+                    },
+                    "publicationDate": {
+                        "year": 2023,
+                        "month": 6
+                    }
+                }
+            ],
+            "language": {
+                "uri": "/dk/atira/pure/core/languages/und",
+                "term": {
+                    "en_GB": "Undefined/Unknown"
+                }
+            },
+            "contributors": [
+                {
+                    "typeDiscriminator": "InternalContributorAssociation",
+                    "pureId": 230703991,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "G.",
+                        "lastName": "Ferdinands"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "30a816b9-5ef5-4359-87ee-b197588285fa"
+                    }
+                },
+                {
+                    "typeDiscriminator": "InternalContributorAssociation",
+                    "pureId": 230703992,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "R.D.",
+                        "lastName": "Schram"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "4363679a-a179-4e35-8095-1c1d9875d46c"
+                    }
+                },
+                {
+                    "typeDiscriminator": "InternalContributorAssociation",
+                    "pureId": 230703993,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "Jonathan",
+                        "lastName": "de Bruin"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "79debb11-b371-448d-8323-3f68ae9f3d1a"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "8d963bb6-accc-4639-8198-13964d699acd"
+                        }
+                    ]
+                },
+                {
+                    "typeDiscriminator": "InternalContributorAssociation",
+                    "pureId": 230703995,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "A.",
+                        "lastName": "Bagheri"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "6fcd5061-8406-4dd4-b3cb-13722c067ed4"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "1553c14c-3b3e-4b31-b8cc-74b6253e9338"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "d7534521-f7a3-404f-b726-eaa5afa30bc3"
+                        }
+                    ]
+                },
+                {
+                    "typeDiscriminator": "InternalContributorAssociation",
+                    "pureId": 230703998,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "D.L.",
+                        "lastName": "Oberski"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "c8a75aa1-3411-425b-9902-666f553ef645"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "1553c14c-3b3e-4b31-b8cc-74b6253e9338"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "d7534521-f7a3-404f-b726-eaa5afa30bc3"
+                        }
+                    ]
+                },
+                {
+                    "typeDiscriminator": "InternalContributorAssociation",
+                    "pureId": 230704001,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "L.G.",
+                        "lastName": "Tummers"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "54ed6839-dafc-48b2-ad45-4d1308122705"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "6b33bd63-eaf5-49f8-ae5b-9f7c5af6d5f2"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "9c2e9888-4c1e-40c1-a020-099b1fde0080"
+                        }
+                    ]
+                },
+                {
+                    "typeDiscriminator": "ExternalContributorAssociation",
+                    "pureId": 230704004,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "Jelle",
+                        "lastName": "Teijema"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "externalPerson": {
+                        "systemName": "ExternalPerson",
+                        "uuid": "7e3f1120-eb68-4889-a3bc-20101dd807cf"
+                    }
+                },
+                {
+                    "typeDiscriminator": "InternalContributorAssociation",
+                    "pureId": 230704005,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "A.G.J.",
+                        "lastName": "van de Schoot"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "e5a96916-372f-47da-a7df-89ada03dad6f"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "2c936cdb-6a6b-480d-9fed-b95dfd0d1bec"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "d7534521-f7a3-404f-b726-eaa5afa30bc3"
+                        }
+                    ]
+                }
+            ],
+            "organizations": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "8d963bb6-accc-4639-8198-13964d699acd"
+                },
+                {
+                    "systemName": "Organization",
+                    "uuid": "9c2e9888-4c1e-40c1-a020-099b1fde0080"
+                },
+                {
+                    "systemName": "Organization",
+                    "uuid": "6b33bd63-eaf5-49f8-ae5b-9f7c5af6d5f2"
+                },
+                {
+                    "systemName": "Organization",
+                    "uuid": "2c936cdb-6a6b-480d-9fed-b95dfd0d1bec"
+                },
+                {
+                    "systemName": "Organization",
+                    "uuid": "1553c14c-3b3e-4b31-b8cc-74b6253e9338"
+                },
+                {
+                    "systemName": "Organization",
+                    "uuid": "d7534521-f7a3-404f-b726-eaa5afa30bc3"
+                }
+            ],
+            "totalNumberOfContributors": 8,
+            "managingOrganization": {
+                "systemName": "Organization",
+                "uuid": "8d963bb6-accc-4639-8198-13964d699acd"
+            },
+            "electronicVersions": [
+                {
+                    "typeDiscriminator": "DoiElectronicVersion",
+                    "pureId": 230703970,
+                    "accessType": {
+                        "uri": "/dk/atira/pure/core/openaccesspermission/unknown",
+                        "term": {
+                            "en_GB": "Unknown"
+                        }
+                    },
+                    "doi": "10.1186/s13643-023-02257-7",
+                    "versionType": {
+                        "uri": "/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion",
+                        "term": {
+                            "en_GB": "Final published version"
+                        }
+                    }
+                }
+            ],
+            "links": [
+                {
+                    "pureId": 230703974,
+                    "url": "https://doi.org/10.1186/s13643-023-02257-7"
+                }
+            ],
+            "keywordGroups": [
+                {
+                    "typeDiscriminator": "FreeKeywordsKeywordGroup",
+                    "pureId": 230703971,
+                    "logicalName": "keywordContainers",
+                    "name": {
+                        "en_GB": "Keywords"
+                    },
+                    "keywords": [
+                        {
+                            "pureId": 230703973,
+                            "locale": "en_GB",
+                            "freeKeywords": [
+                                "Active Learning",
+                                "Robust Learning",
+                                "Meta-Learning",
+                                "Semi-Supervised Learning",
+                                "Prioritization"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "visibility": {
+                "key": "FREE",
+                "description": {
+                    "en_GB": "Public - No restriction"
+                }
+            },
+            "workflow": {
+                "step": "forApproval",
+                "description": {
+                    "en_GB": "For approval"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "Id",
+                    "pureId": 230816377,
+                    "idSource": "Scopus",
+                    "value": "85162899029"
+                }
+            ],
+            "customDefinedFields": {},
+            "journalAssociation": {
+                "pureId": 230703969,
+                "title": {
+                    "pureId": 63476813,
+                    "title": "Systematic Reviews"
+                },
+                "issn": {
+                    "pureId": 60594331,
+                    "issn": "2046-4053"
+                },
+                "journal": {
+                    "systemName": "Journal",
+                    "uuid": "d16cb542-ebbc-491c-a44f-a8bd8b406358"
+                }
+            },
+            "systemName": "ResearchOutput"
+        },
+        {
+            "typeDiscriminator": "ContributionToJournal",
+            "pureId": 230704013,
+            "uuid": "9b81a85e-f6bc-4419-9f7d-cdeea07a73f4",
+            "createdBy": "GROTE004",
+            "createdDate": "2024-09-09T10:45:03.844+02:00",
+            "modifiedBy": "root",
+            "modifiedDate": "2024-09-10T04:01:03.509+02:00",
+            "portalUrl": "https://staging.research-portal.uu.nl/en/publications/9b81a85e-f6bc-4419-9f7d-cdeea07a73f4",
+            "version": "79d7724eae04dc8d8ab01b4a256d0f786bb4fdb2",
+            "title": {
+                "value": "An approach for analyzing business process execution complexity based on textual data and event log"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article",
+                "term": {
+                    "en_GB": "Article"
+                }
+            },
+            "category": {
+                "uri": "/dk/atira/pure/researchoutput/category/academic",
+                "term": {
+                    "en_GB": "Academic"
+                }
+            },
+            "peerReview": true,
+            "publicationStatuses": [
+                {
+                    "pureId": 230704034,
+                    "current": true,
+                    "publicationStatus": {
+                        "uri": "/dk/atira/pure/researchoutput/status/published",
+                        "term": {
+                            "en_GB": "Published"
+                        }
+                    },
+                    "publicationDate": {
+                        "year": 2023,
+                        "month": 3
+                    }
+                }
+            ],
+            "language": {
+                "uri": "/dk/atira/pure/core/languages/und",
+                "term": {
+                    "en_GB": "Undefined/Unknown"
+                }
+            },
+            "contributors": [
+                {
+                    "typeDiscriminator": "ExternalContributorAssociation",
+                    "pureId": 230704031,
+                    "externalOrganizations": [
+                        {
+                            "systemName": "ExternalOrganization",
+                            "uuid": "94d11b4f-c80f-43e1-b146-073704e71c48"
+                        }
+                    ],
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "Aleksandra",
+                        "lastName": "Revina"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "externalPerson": {
+                        "systemName": "ExternalPerson",
+                        "uuid": "07239203-44e5-4354-8157-9995aea81159"
+                    }
+                },
+                {
+                    "typeDiscriminator": "InternalContributorAssociation",
+                    "pureId": 230704032,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "U.",
+                        "lastName": "Aksu"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "a303042d-c2d4-406f-8077-b4df24aaf7aa"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "8d963bb6-accc-4639-8198-13964d699acd"
+                        }
+                    ]
+                }
+            ],
+            "organizations": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "8d963bb6-accc-4639-8198-13964d699acd"
+                }
+            ],
+            "totalNumberOfContributors": 2,
+            "managingOrganization": {
+                "systemName": "Organization",
+                "uuid": "8d963bb6-accc-4639-8198-13964d699acd"
+            },
+            "electronicVersions": [
+                {
+                    "typeDiscriminator": "DoiElectronicVersion",
+                    "pureId": 230704015,
+                    "accessType": {
+                        "uri": "/dk/atira/pure/core/openaccesspermission/unknown",
+                        "term": {
+                            "en_GB": "Unknown"
+                        }
+                    },
+                    "doi": "10.1016/j.is.2023.102184",
+                    "versionType": {
+                        "uri": "/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion",
+                        "term": {
+                            "en_GB": "Final published version"
+                        }
+                    }
+                }
+            ],
+            "links": [
+                {
+                    "pureId": 230704019,
+                    "url": "https://doi.org/10.1016/j.is.2023.102184"
+                }
+            ],
+            "keywordGroups": [
+                {
+                    "typeDiscriminator": "FreeKeywordsKeywordGroup",
+                    "pureId": 230704016,
+                    "logicalName": "keywordContainers",
+                    "name": {
+                        "en_GB": "Keywords"
+                    },
+                    "keywords": [
+                        {
+                            "pureId": 230704018,
+                            "locale": "en_GB",
+                            "freeKeywords": [
+                                "Semantic Business Process Management",
+                                "Process Performance Measurement",
+                                "Business Process Management",
+                                "Workflow Mining",
+                                "Predictive Process Monitoring",
+                                "Process mining"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "visibility": {
+                "key": "FREE",
+                "description": {
+                    "en_GB": "Public - No restriction"
+                }
+            },
+            "workflow": {
+                "step": "forApproval",
+                "description": {
+                    "en_GB": "For approval"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "Id",
+                    "pureId": 230816384,
+                    "idSource": "Scopus",
+                    "value": "85147538352"
+                }
+            ],
+            "customDefinedFields": {},
+            "journalAssociation": {
+                "pureId": 230704014,
+                "title": {
+                    "pureId": 40615449,
+                    "title": "Information Systems"
+                },
+                "issn": {
+                    "pureId": 40615448,
+                    "issn": "0306-4379"
+                },
+                "journal": {
+                    "systemName": "Journal",
+                    "uuid": "bfa9299d-cf9a-493f-9229-819fcc56362e"
+                }
+            },
+            "systemName": "ResearchOutput",
+            "externalOrganizations": [
+                {
+                    "systemName": "ExternalOrganization",
+                    "uuid": "94d11b4f-c80f-43e1-b146-073704e71c48"
+                }
+            ]
+        },
+        {
+            "typeDiscriminator": "ContributionToJournal",
+            "pureId": 230703923,
+            "uuid": "f302ceb3-f806-4f7a-8e5e-0c8eeb8b5417",
+            "createdBy": "GROTE004",
+            "createdDate": "2024-09-09T10:44:56.922+02:00",
+            "modifiedBy": "root",
+            "modifiedDate": "2024-09-10T04:01:02.304+02:00",
+            "portalUrl": "https://staging.research-portal.uu.nl/en/publications/f302ceb3-f806-4f7a-8e5e-0c8eeb8b5417",
+            "version": "307ce31ab782c188168343d4ee6bb42dcbc8e949",
+            "title": {
+                "value": "Active learning-based systematic reviewing using switching classification models: the case of the onset, maintenance, and relapse of depressive disorders"
+            },
+            "type": {
+                "uri": "/dk/atira/pure/researchoutput/researchoutputtypes/contributiontojournal/article",
+                "term": {
+                    "en_GB": "Article"
+                }
+            },
+            "category": {
+                "uri": "/dk/atira/pure/researchoutput/category/academic",
+                "term": {
+                    "en_GB": "Academic"
+                }
+            },
+            "peerReview": true,
+            "publicationStatuses": [
+                {
+                    "pureId": 230703962,
+                    "current": true,
+                    "publicationStatus": {
+                        "uri": "/dk/atira/pure/researchoutput/status/published",
+                        "term": {
+                            "en_GB": "Published"
+                        }
+                    },
+                    "publicationDate": {
+                        "year": 2023,
+                        "month": 5
+                    }
+                }
+            ],
+            "language": {
+                "uri": "/dk/atira/pure/core/languages/und",
+                "term": {
+                    "en_GB": "Undefined/Unknown"
+                }
+            },
+            "contributors": [
+                {
+                    "typeDiscriminator": "ExternalContributorAssociation",
+                    "pureId": 230703944,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "Jelle",
+                        "lastName": "Teijema"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "externalPerson": {
+                        "systemName": "ExternalPerson",
+                        "uuid": "7e3f1120-eb68-4889-a3bc-20101dd807cf"
+                    }
+                },
+                {
+                    "typeDiscriminator": "InternalContributorAssociation",
+                    "pureId": 230703945,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "L.",
+                        "lastName": "Hofstee"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "58a5e2d4-5861-456d-b294-90a1c9c65de9"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "2c936cdb-6a6b-480d-9fed-b95dfd0d1bec"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "d7534521-f7a3-404f-b726-eaa5afa30bc3"
+                        }
+                    ]
+                },
+                {
+                    "typeDiscriminator": "InternalContributorAssociation",
+                    "pureId": 230703948,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "M.E.",
+                        "lastName": "Brouwer"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "a739d30b-50d8-4441-823c-5efc3e5dc8e2"
+                    }
+                },
+                {
+                    "typeDiscriminator": "InternalContributorAssociation",
+                    "pureId": 230703949,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "Jonathan",
+                        "lastName": "de Bruin"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "79debb11-b371-448d-8323-3f68ae9f3d1a"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "8d963bb6-accc-4639-8198-13964d699acd"
+                        }
+                    ]
+                },
+                {
+                    "typeDiscriminator": "InternalContributorAssociation",
+                    "pureId": 230703951,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "G.",
+                        "lastName": "Ferdinands"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "30a816b9-5ef5-4359-87ee-b197588285fa"
+                    }
+                },
+                {
+                    "typeDiscriminator": "ExternalContributorAssociation",
+                    "pureId": 230703952,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "Jan",
+                        "lastName": "de Boer"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "externalPerson": {
+                        "systemName": "ExternalPerson",
+                        "uuid": "45fb7f18-1ef0-4c88-863f-ce99d9f22c2c"
+                    }
+                },
+                {
+                    "typeDiscriminator": "ExternalContributorAssociation",
+                    "pureId": 230703953,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "Pablo",
+                        "lastName": "Vizan"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "externalPerson": {
+                        "systemName": "ExternalPerson",
+                        "uuid": "384559c6-552a-400d-a44b-d5306cafa3f0"
+                    }
+                },
+                {
+                    "typeDiscriminator": "InternalContributorAssociation",
+                    "pureId": 230703954,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "S.A.G.E.",
+                        "lastName": "van den Brand"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "26046158-bee7-4c4e-a483-c563497fa796"
+                    }
+                },
+                {
+                    "typeDiscriminator": "InternalContributorAssociation",
+                    "pureId": 230703955,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "C.L.H.",
+                        "lastName": "Bockting"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "2cea3092-7509-4383-81bd-f7d880fbd634"
+                    }
+                },
+                {
+                    "typeDiscriminator": "InternalContributorAssociation",
+                    "pureId": 230703956,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "A.G.J.",
+                        "lastName": "van de Schoot"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "e5a96916-372f-47da-a7df-89ada03dad6f"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "2c936cdb-6a6b-480d-9fed-b95dfd0d1bec"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "d7534521-f7a3-404f-b726-eaa5afa30bc3"
+                        }
+                    ]
+                },
+                {
+                    "typeDiscriminator": "InternalContributorAssociation",
+                    "pureId": 230703959,
+                    "hidden": false,
+                    "correspondingAuthor": false,
+                    "name": {
+                        "firstName": "A.",
+                        "lastName": "Bagheri"
+                    },
+                    "role": {
+                        "uri": "/dk/atira/pure/researchoutput/roles/contributiontojournal/author",
+                        "term": {
+                            "en_GB": "Author"
+                        }
+                    },
+                    "person": {
+                        "systemName": "Person",
+                        "uuid": "6fcd5061-8406-4dd4-b3cb-13722c067ed4"
+                    },
+                    "organizations": [
+                        {
+                            "systemName": "Organization",
+                            "uuid": "1553c14c-3b3e-4b31-b8cc-74b6253e9338"
+                        },
+                        {
+                            "systemName": "Organization",
+                            "uuid": "d7534521-f7a3-404f-b726-eaa5afa30bc3"
+                        }
+                    ]
+                }
+            ],
+            "organizations": [
+                {
+                    "systemName": "Organization",
+                    "uuid": "d7534521-f7a3-404f-b726-eaa5afa30bc3"
+                },
+                {
+                    "systemName": "Organization",
+                    "uuid": "8d963bb6-accc-4639-8198-13964d699acd"
+                },
+                {
+                    "systemName": "Organization",
+                    "uuid": "2c936cdb-6a6b-480d-9fed-b95dfd0d1bec"
+                },
+                {
+                    "systemName": "Organization",
+                    "uuid": "1553c14c-3b3e-4b31-b8cc-74b6253e9338"
+                }
+            ],
+            "totalNumberOfContributors": 11,
+            "managingOrganization": {
+                "systemName": "Organization",
+                "uuid": "2c936cdb-6a6b-480d-9fed-b95dfd0d1bec"
+            },
+            "electronicVersions": [
+                {
+                    "typeDiscriminator": "DoiElectronicVersion",
+                    "pureId": 230703925,
+                    "accessType": {
+                        "uri": "/dk/atira/pure/core/openaccesspermission/unknown",
+                        "term": {
+                            "en_GB": "Unknown"
+                        }
+                    },
+                    "doi": "10.3389/frma.2023.1178181",
+                    "versionType": {
+                        "uri": "/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion",
+                        "term": {
+                            "en_GB": "Final published version"
+                        }
+                    }
+                }
+            ],
+            "links": [
+                {
+                    "pureId": 230703929,
+                    "url": "https://doi.org/10.3389/frma.2023.1178181"
+                }
+            ],
+            "keywordGroups": [
+                {
+                    "typeDiscriminator": "FreeKeywordsKeywordGroup",
+                    "pureId": 230703926,
+                    "logicalName": "keywordContainers",
+                    "name": {
+                        "en_GB": "Keywords"
+                    },
+                    "keywords": [
+                        {
+                            "pureId": 230703928,
+                            "locale": "en_GB",
+                            "freeKeywords": [
+                                "Research Methodology",
+                                "Interpretable Models"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "visibility": {
+                "key": "FREE",
+                "description": {
+                    "en_GB": "Public - No restriction"
+                }
+            },
+            "workflow": {
+                "step": "forApproval",
+                "description": {
+                    "en_GB": "For approval"
+                }
+            },
+            "identifiers": [
+                {
+                    "typeDiscriminator": "Id",
+                    "pureId": 230816372,
+                    "idSource": "Scopus",
+                    "value": "85162901453"
+                }
+            ],
+            "customDefinedFields": {},
+            "journalAssociation": {
+                "pureId": 230703924,
+                "title": {
+                    "pureId": 85919544,
+                    "title": "Nonlinear Optics Quantum Optics"
+                },
+                "issn": {
+                    "pureId": 85919094,
+                    "issn": "1543-0537"
+                },
+                "journal": {
+                    "systemName": "Journal",
+                    "uuid": "fe851e8c-1ac9-471c-8a03-7a4349e85f3e"
+                }
+            },
+            "systemName": "ResearchOutput"
+        }
+    ]
+}
