@@ -13,20 +13,6 @@ from config import DEFAULTS
 
 
 # # ######################################################
-# # Parameters for harvesting persons and research outputs from OpenAlex
-# # ######################################################
-# OPENALEX_API_URL = 'https://api.openalex.org/'
-# OPENALEX_ENDPOINT = 'works'
-# OPENALEX_HARVEST_FROM_FILE = False
-# OPENALEX_HARVEST_FILENAME = 'openalex_harvest.json'
-# OPENALEX_DATA_FILENAME = 'openalex_data.csv'
-# OPENALEX_RESOUT_YEARS = ['2020']
-# # This number is the max recs to harvest per year, not total
-# OPENALEX_MAX_RECS_TO_HARVEST = 0                             # 0 = all records
-# OPENALEX_FIELDS = 'doi,publication_year,title,type,authorships'
-#
-#
-# # ######################################################
 # # Mapping from OpenAlex research output types to Ricgraph research output types.
 # # ######################################################
 # ROTYPE_MAPPING_OPENALEX = {

@@ -1,40 +1,37 @@
-"""
-Script Name: enrich_pure_external_persons.py
+# ########################################################################
+# Script: enrich_pure_external_persons.py
+#
+# Description:
+# This script updates external person records in Pure by integrating data from
+# Ricgraph and OpenAlex. The goal is to enrich external person profiles with
+# additional identifiers such as ORCID and OpenAlex IDs.
+#
+# The script includes:
+# - Fetching research outputs associated with external persons.
+# - Matching authors between Pure and OpenAlex based on identifiers.
+# - Retrieving external person records from Pure and updating them with missing IDs.
+# - Logging and error handling.
+#
+# Important:
+# This script relies on external APIs (Pure and OpenAlex) and should be run
+# with necessary configurations in place.
+# This script is meant to be invoked by the BackToPure web interface.
+#
+# Dependencies:
+# - requests, pandas, logging, urllib3, etc.
+#
+# Author: David Grote Beverborg
+# Created: 2024
+#
+# License:
+# MIT License
+#
+# Copyright (c) 2024 David Grote Beverborg
+# ########################################################################
 
-Summary:
----------
-This script is designed to update external person records in the Pure research information system by integrating data from ricgraph/OpenAlex. The main goal is to enrich the existing data with additional identifiers such as ORCID and OpenAlex IDs, and ensure the data in Pure is as complete and accurate as possible.
-
-The script performs the following steps:
-
-1. **Initial Setup**:
-   - Imports necessary libraries and sets up configurations such as logging, session handling for HTTP requests, and API keys.
-
-2. **Selecting Faculties and Research Outputs**:
-   - Selects a set of faculties based on the user's choice and identifies the research outputs associated with those faculties from ricgraph. This defines the scope of data to be processed.
-
-3. **Fetching Data from Pure and OpenAlex**:
-   - Retrieves research output data from both Pure and OpenAlex systems, ensuring a comprehensive dataset from both sources, containing information about publications and their authors.
-
-4. **Matching Authors**:
-   - Processes the retrieved research outputs to identify authors and matches individuals across the two datasets (Pure and OpenAlex) based on name and identifier information.
-   - Handles inconsistencies in naming conventions and ensures that corresponding records from Pure and OpenAlex are linked.
-
-5. **Retrieving and Updating Person Records**:
-   - Retrieves detailed records of external persons from Pure after matching.
-   - Updates these records with additional identifiers, such as ORCID and OpenAlex IDs, when they are not already present.
-   - Uses the Pure API to ensure that all records are enriched with as much available data as possible.
-
-6. **Logging and Error Handling**:
-   - Uses logging to track progress, successes, and errors during the matching and updating process. Handles errors gracefully to continue processing as much data as possible.
-
-7. **Test Mode**:
-   - Includes a test mode option that allows users to run the script without making actual updates to Pure, useful for validating changes before applying them.
-
-The purpose of the script is to integrate and update information about external researchers in Pure by leveraging data from OpenAlex, helping keep Pure's data accurate and comprehensive, especially concerning author identifiers.
-"""
 
 import re
+import os
 import time
 import pandas as pd
 import logging
@@ -42,12 +39,15 @@ from logging_config import setup_logging
 import requests
 import json
 import argparse
+from datetime import datetime
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 import urllib3
 from config import PURE_BASE_URL, PURE_API_KEY, EMAIL, RIC_BASE_URL, OPENALEXEX_ID_URI, ORCID_ID_URI, OPENALEX_HEADERS
-
+from typing import List, Dict
+import sys
 logger = setup_logging('btp', level=logging.INFO)
+datetimetoday = datetime.now().strftime('%Y%m%d')
 headers = {
     'Accept': 'application/json',
     'api-key': PURE_API_KEY,
@@ -66,6 +66,18 @@ session.mount("https://", adapter)
 # Disable only the single InsecureRequestWarning from urllib3 needed to use the InsecureRequestWarning
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+def timestamp(seconds: bool = False) -> str:
+    """Get a timestamp only consisting of a time.
+
+    :param seconds: If True, also show seconds in the timestamp.
+    :return: the timestamp.
+    """
+    now = datetime.now()
+    if seconds:
+        time_stamp = now.strftime("%H:%M:%S")
+    else:
+        time_stamp = now.strftime("%H:%M")
+    return time_stamp
 def extract_orcid_id(orcid):
     # Check if the ORCID is in URL format
     if orcid and orcid.startswith('https://orcid.org/'):
@@ -255,6 +267,8 @@ def update_externalpersons_pure(persons, matched_personsjson, test_choice):
                 return person
         return None
 
+    data_to_save = []  # List to store JSON objects for saving
+    rows_to_update = []  # List to store rows for the DataFrame
     logger.info(f"start updating external persons from pure")
     ro, matched_persons, updated_persons, already_ids = 0, 0, 0, 0
     for row in persons:
@@ -320,29 +334,70 @@ def update_externalpersons_pure(persons, matched_personsjson, test_choice):
             identifiers_updated = True
 
         # Update person data in Pure if identifiers were added
+        # if identifiers_updated:
+        #     updated_persons += 1
+        #     if test_choice == 'no':
+        #         url = PURE_BASE_URL + 'external-persons/' + uuid
+        #         try:
+        #             response = session.put(url, headers=headers, json=matched_person, verify=False)
+        #             if response.status_code != 200:
+        #                 logger.debug(f"Failed to update data for UUID {uuid}: {response.text}")
+        #             else:
+        #                 logger.debug(f"Successfully updated data for UUID {uuid} with ORCID {new_orcid}, OpenAlex {new_openalexid}")
+        #
+        #         except Exception as e:
+        #             logger.error(f"Error updating UUID {uuid}: {e}")
+        #         time.sleep(0.1)  # Adjust the sleep time based on rate limits
+        #     else:
+        #
+        #         logger.debug(f"Test mode: would update UUID {uuid} with ORCID {new_orcid}, OpenAlex {new_openalexid}")
+        # else:
+        #     already_ids += 1
+        # Save person data to file if identifiers were added
         if identifiers_updated:
+
             updated_persons += 1
-            if test_choice == 'no':
-                url = PURE_BASE_URL + 'external-persons/' + uuid
-                try:
-                    response = session.put(url, headers=headers, json=matched_person, verify=False)
-                    if response.status_code != 200:
-                        logger.debug(f"Failed to update data for UUID {uuid}: {response.text}")
-                    else:
-                        logger.debug(f"Successfully updated data for UUID {uuid} with ORCID {new_orcid}, OpenAlex {new_openalexid}")
-
-                except Exception as e:
-                    logger.error(f"Error updating UUID {uuid}: {e}")
-                time.sleep(0.1)  # Adjust the sleep time based on rate limits
-            else:
-
-                logger.debug(f"Test mode: would update UUID {uuid} with ORCID {new_orcid}, OpenAlex {new_openalexid}")
+            matched_person['UUID'] = uuid  # Optionally include UUID for reference
+            matched_person['to_be_updated'] = 'X'
+            matched_person['updated'] = ' '
+            data_to_save.append(
+                matched_person)  # Add to the list of JSON objects
+            row['to_be_updated'] = 'X'
+            row['updated'] = ' '
+            rows_to_update.append(row)  # Add the current row to the list for the DataFrame
         else:
             already_ids += 1
 
-    logger.info(f"end updating external persons from pure")
-    logger.info(f"total external persons updated: {updated_persons}")
-    logger.info(f"total external persons not updated (already has ids, or no ids found): {already_ids}")
+    # Save all collected JSON objects to the file
+    output_folder = "output/external_persons"  # Folder path
+    output_file = os.path.join(output_folder, "to_be_updated.json")  # Full file path
+    csv_output_file = os.path.join(output_folder, "ext_pers_update.csv")  # CSV file path
+
+    # Ensure the output folder exists
+    os.makedirs(output_folder, exist_ok=True)
+    try:
+        with open(output_file, 'w') as file:
+            json.dump(data_to_save, file, indent=4)
+        logger.info(f"Saved {len(data_to_save)} persons to {output_file}")
+    except Exception as e:
+        logger.error(f"Error saving JSON data to file: {e}")
+
+    try:
+        if rows_to_update:
+            ext_pers_update = pd.DataFrame(rows_to_update)
+            desired_order = ['to_be_updated', 'updated', 'Name', 'Alex_ID', 'Pure_UUID', 'ORCID']
+            ext_pers_update = ext_pers_update[desired_order]
+
+            ext_pers_update.to_csv(csv_output_file, index=False)
+            logger.info(f"Saved {len(rows_to_update)} rows to {csv_output_file}")
+        else:
+            logger.info("No rows to save to CSV.")
+    except Exception as e:
+        logger.error(f"Error saving DataFrame to CSV: {e}")
+
+
+    logger.info(f"total external persons that can be updated: {updated_persons}")
+    logger.info(f"total external persons that cannot be updated (already has ids, or no ids found): {already_ids}")
 
 
 
@@ -394,12 +449,24 @@ def get_external_persons_data(persons):
 
         except requests.exceptions.RequestException as e:
             logger.error(f"An error occurred while processing batch: {batch}\nError: {e}")
-    logger.info(f"end fetching pure")
-    logger.info(f"Matching external persons found: {len(all_person_data)}")
+    logger.debug(f"end fetching pure")
+    logger.debug(f"Matching external persons found: {len(all_person_data)}")
+
+    #
+    # output_folder = 'output/external_persons'
+    # os.makedirs(output_folder, exist_ok=True)
+    # ext_perons_json = os.path.join(output_folder, f'ext_personstobeupdated_{datetimetoday}.csv')
+    #
+    # # Write the data to the JSON file
+    # with open(ext_perons_json, 'w') as json_file:
+    #     json.dump(all_person_data, json_file, indent=4)
+
+
     return all_person_data
 
 def select_faculties(faculty_choice):
-    logger.info(f"start fetching person-roots for {faculty_choice}")
+    # the text for logger is wrong, it actually gets person roots, then research output, then external persons. but seems to complicated to inform the user
+    logger.info(f"start fetching external persons for {faculty_choice}")
 
     params = {
         'value': 'uu faculty',
@@ -454,27 +521,19 @@ def select_researchoutputs(persoonroot_key):
 def select_persons_researchoutput(selected_faculties):
     all_data = []
     for faculty in selected_faculties:
-        logger.info(f"Processing faculty: {faculty}")
+        logging.info(f"Processing faculty: {faculty}")
         personroots = fetch_personroots(faculty)
-        logger.info(f"Processing internal persons: {len(personroots)}")
-        new_data = []
         for personroot in personroots:
-
             if not personroot['_key'] == None:
                 personroot_key = personroot['_key']
-
                 outputs = select_researchoutputs(personroot_key)
                 for output in outputs:
-                    source = output.get("_source", {})
-                    if 'Pure-uu' in source and 'OpenAlex-uu' in source:
-                        # doi = 'doi.org/' + output["_key"].split("|")[0]
-                        doi = output["_key"].split("|")[0]
-                        new_data.append(doi)
-                    # else:
-                        # logger.info(f"{output['_key']} not in both systems")
+                    doi = output["_key"].split("|")[0]
 
-        all_data.extend(new_data)
-    logger.info(f"total pubs found in Ricgraph: {len(all_data)}")
+                    all_data.append(doi)
+
+        all_data.extend(all_data)
+    logger.debug(f"total pubs found in Ricgraph: {len(all_data)}")
     return all_data
 
 
@@ -490,102 +549,60 @@ def match_persons(doi, openalexjsons, purejsons):
     if persons:
         return persons
 
-def fetch_pure_researchoutputs(dois):
+def split_into_batches(lst: List[str], n: int) -> List[List[str]]:
+    """Splits a list into smaller batches of size n."""
+    for i in range(0, len(lst), n):
+        yield lst[i:i + n]
+
+def fetch_batch(batch: List[str], url: str, headers: Dict[str, str], timeout: int) -> List[Dict]:
+    """Fetch a single batch of research outputs from the Pure API."""
+    pipe_separated_dois = "|".join(batch)
+    json_data = {
+        'size': 100,  # Set size to batch size
+        'searchString': pipe_separated_dois,
+    }
+    try:
+        response = session.post(url, headers=headers, json=json_data, timeout=timeout)
+        response.raise_for_status()  # Raises HTTPError for bad responses
+        return response.json().get("items", [])
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Error occurred while fetching batch: {e}")
+        return []
+
+def fetch_pure_researchoutputs(dois: List[str]) -> Dict:
     """
     Fetches research outputs from the Pure API for a given list of DOIs and returns a combined JSON object.
 
     Parameters:
-    api_key (str): The API key for accessing the Pure API.
-    dois (list): List of DOIs.
+    dois (List[str]): List of DOIs.
 
     Returns:
-    dict: Combined JSON object containing all research outputs.
+    Dict: Combined JSON object containing all research outputs.
     """
-    logger.info(f"start fetching research outputs from pure")
+    logger.debug("Start fetching research outputs from Pure API")
     url = PURE_BASE_URL + 'research-outputs/search'
-    # Function to split the list into batches of size n
-    def split_into_batches(lst, n):
-        for i in range(0, len(lst), n):
-            yield lst[i:i + n]
-
-    # Define batch size for testing
-    batch_size = 10
-
-    # Split the DOIs into batches
+    # headers = {"Authorization": f"Bearer {PURE_API_KEY}"}  # Replace with your API key logic
+    timeout = 100
+    batch_size = 50
+    request_delay = 0.1
 
     deduplicated_dois = list(set(dois))
-
-    # logger.info(f"Total deduplicated items =  {str(len(deduplicated_dois))}")
     batches = list(split_into_batches(deduplicated_dois, batch_size))
-
-    # Initialize an empty list to hold all the research outputs
     all_works = []
-    total_dois = set()  # Initialize a set to hold all DOIs
-    # Optional: set a delay between requests to avoid hitting rate limits
-    request_delay = 0.1  # seconds
     total_items = 0
-    # Loop over each batch and make a request
+
     for batch_index, batch in enumerate(batches):
-        pipe_separated_dois = "|".join(batch)
-        logger.debug(
-            f"Finding research outputs for batch {batch_index + 1}/{len(batches)}, {batch_size} DOIs per batch.")
-        json_data = {
-            'size': 100,  # Set size to batch size
-            'searchString': pipe_separated_dois,
-        }
-        try:
-            # Make the API request using the pre-configured session
-            response = session.post(
-                url,
-                headers=headers,
-                json=json_data,
-                timeout= 100
-            )
-            response.raise_for_status()  # Raises an HTTPError for bad responses
+        logger.debug(f"Processing batch {batch_index + 1}/{len(batches)}")
 
-            # Parse the response JSON
-            data = response.json()
-            returned_items = data.get('count')
-            logger.debug(f"Total items found for batch {batch_index + 1}: {data.get('count', 0)}")
-            total_items += returned_items
-            works = data.get("items", [])  # Extract the list of items
-            # Create a set of returned DOIs from the API response, normalized to lowercase
-            returned_dois = set()
-            for item in works:
-                for version in item.get("electronicVersions", []):
-                    if "doi" in version:
-                        returned_dois.add(version["doi"].lower())  # Normalize to lowercase
+        works = fetch_batch(batch, url, headers, timeout)
+        total_items += len(works)
+        all_works.extend(works)
 
-            total_dois.update(returned_dois)
+        logger.debug(f"Batch {batch_index + 1}/{len(batches)}: Retrieved {len(works)} items.")
+        time.sleep(request_delay)  # Avoid hitting API rate limits
 
-            # Add the retrieved works to the list
-            all_works.extend(works)
-            logger.debug(f"Batch {batch_index + 1}/{len(batches)}: Retrieved {len(works)} items.")
-
-        except requests.exceptions.RequestException as e:
-            logger.error(f"Error occurred while processing batch {batch_index + 1}: {e}")
-
-        # Optional: Add a delay between requests to avoid hitting rate limits
-        time.sleep(request_delay)
-
-    # Combine all works into one JSON object
-    pureworks = {"results": all_works}
-    # logger.info(f"Total matching research outputs found: {len(pureworks['results'])}")
-    logger.info(f"Total matching research outputs found: {str(total_items)}")
-
-
-    # Save the JSON data to a file
-    json_filename = 'research_outputs.json'  # Name of the file to save the JSON data
-    try:
-        with open(json_filename, 'w', encoding='utf-8') as json_file:
-            json.dump(pureworks, json_file, ensure_ascii=False, indent=4)
-        logger.info(f"JSON data successfully saved to {json_filename}")
-    except IOError as e:
-        logger.error(f"Error saving JSON data to file: {e}")
-    logger.info(f"end fetching pure")
-
-    # Return or use pureworks as needed
-    return pureworks
+    logger.debug(f"Total matching research outputs found: {total_items}")
+    return {"results": all_works}
 
 def fetch_openalex_works(dois):
     """
@@ -608,8 +625,6 @@ def fetch_openalex_works(dois):
 
     # Filter valid DOIs
     dois = [doi for doi in dois if doi_pattern.match(doi)]
-
-    logger.info(f"start fetching open alex")
 
     from tenacity import retry, stop_after_attempt, wait_exponential
 
@@ -650,25 +665,32 @@ def fetch_openalex_works(dois):
     openalexworks = {"results": all_works} if all_works else {}
 
     # Log the total number of works fetched
-    logger.info(f"Total number of works fetched: {len(all_works)}")
+    logger.debug(f"Total number of works fetched from Open Alex: {len(all_works)}")
 
-    logger.info(f"End fetching from OpenAlex")
+
     return openalexworks
 
 def match_all_persons(researchoutputs, openalexjsons, purejsons):
     all_persons = []
+
     for doi in researchoutputs:
 
         persons = match_persons(doi, openalexjsons, purejsons)
         if persons:
             all_persons = all_persons + persons
 
-    logger.info(f"total persons matched: {len(all_persons)}")
+    logger.info(f"total external persons found: {len(all_persons)}")
     return all_persons
 
 def main(faculty_choice, test_choice):
     logger.info("Script to update external persons in pure from ricgraph has started")
-    logger.info(f"Test run =  {test_choice}")
+
+    logger.info("The script performs the following steps:\n"
+                 "1. **Person Root Node Retrieval**: Retrieves all person-root nodes from Ricgraph for the selected faculty and fetches the associated person IDs.\n"
+                 "2. **Enrichment Check**: Checks if each external person already has the required identifiers in Pure. Prepares to update missing information if needed.\n"
+                 "3. **Update file**: Produces a file with all of the persons that can be updated, with the new ids. after the first part is finished, you can access that file. You must check that file, and remove unwanted updates\n"
+                 "4. **Person Data Update**: After you have checked the file a new button appears that sends the updates to pure.\n\n"
+                 "**Note:** The process may take a while before log items appear on the screen, especially if a large faculty is chosen.")
     faculties = select_faculties(faculty_choice)
 
     researchoutputs = select_persons_researchoutput(faculties)
@@ -676,8 +698,9 @@ def main(faculty_choice, test_choice):
     openalexjsons = fetch_openalex_works(researchoutputs)
     all_persons = match_all_persons(researchoutputs, openalexjsons, purejsons)
     matched_personsjson = get_external_persons_data(all_persons)
+
     update_externalpersons_pure(all_persons, matched_personsjson, test_choice)
-    logger.info(f"Script has ended")
+    logger.info(f"Script import research output part 1 has ended, ")
 
 # ########################################################################
 # MAIN
@@ -687,8 +710,8 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Update external persons from Ricgraph')
     parser.add_argument('faculty_choice', type=str, nargs='?',
-                        # default='uu faculty: information & technology services|organization_name',
-                        default='uu faculty: faculteit geowetenschappen|organization_name',
+                        default='uu faculty: information & technology services|organization_name',
+                        # default='uu faculty: faculteit geowetenschappen|organization_name',
                         help='Faculty choice or "all"')
     parser.add_argument('test_choice', type=str, nargs='?', default='yes', help='Run in test mode ("yes" or "no")')
     args = parser.parse_args()

@@ -74,18 +74,18 @@ logger = setup_logging('external persons', level=logging.INFO)
 logging.info(f"script started")
 outputs = select_researchoutputs()
 export  = []
-
-for output in outputs:
-    # print(output)
-    persons = get_all_personsfromdoi(output['_key'])
-    for person in persons:
-        personfields = get_allpersoninfo(person['_key'])
-        ids, full_name = get_idsandname(personfields)
-        export.append({
-            'pubkey': output['_key'],
-            'personroot': person['_key'],
-            'full_name': full_name,
-            'ids': ids})
+#
+# for output in outputs:
+#     # print(output)
+#     persons = get_all_personsfromdoi(output['_key'])
+#     for person in persons:
+#         personfields = get_allpersoninfo(person['_key'])
+#         ids, full_name = get_idsandname(personfields)
+#         export.append({
+#             'pubkey': output['_key'],
+#             'personroot': person['_key'],
+#             'full_name': full_name,
+#             'ids': ids})
 
 
 # for item in export:

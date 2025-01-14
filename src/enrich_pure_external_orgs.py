@@ -1,4 +1,36 @@
+# ########################################################################
+# Script: enrich_pure_external_orgs.py
+#
+# Description:
+# This script enriches external organization records in Pure using data from
+# Ricgraph and OpenAlex. The main task is to ensure that external organizations
+# in Pure have up-to-date information, such as ROR IDs and geographic data.
+#
+# The script includes:
+# - Fetching research outputs and associated organizations.
+# - Matching organizations between Pure and OpenAlex.
+# - Updating external organizations in Pure with ROR IDs if missing.
+#
+# Important:
+# This script relies on external APIs (Pure and OpenAlex) and should be run
+# with necessary configurations in place.
+# This script is meant to be invoked by the BackToPure web interface.
+#
+# Dependencies:
+# - requests, pandas, json, logging, urllib3, etc.
+#
+# Author: David Grote Beverborg
+# Created: 2024
+#
+# License:
+# MIT License
+#
+# Copyright (c) 2024 David Grote Beverborg
+# ########################################################################
+
+
 import time
+import csv
 import pandas as pd
 import logging
 from logging_config import setup_logging
@@ -9,6 +41,7 @@ import argparse
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 import urllib3
+import os
 from config import PURE_BASE_URL, PURE_API_KEY, PURE_HEADERS, RIC_BASE_URL, ROR_ID_URI, ORCID_ID_URI, OPENALEX_HEADERS
 
 logger = setup_logging('btp', level=logging.INFO)
@@ -31,7 +64,7 @@ session.mount("https://", adapter)
 # Disable only the single InsecureRequestWarning from urllib3 needed to use the InsecureRequestWarning
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-def match_organizations(pure_orgs, openalex_orgs):
+def match_organizations(pure_orgs, openalex_orgs, ):
     # Initialize the new list to store the organizations to update
     orgs_to_update = []
 
@@ -137,6 +170,16 @@ def update_externalorg_pure(orgs, test_choice, update):
 
     adapter = HTTPAdapter(max_retries=retry_strategy)
 
+    # Directory to save the output files
+    output_dir = "output/external_orgs"
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Initialize a list to store rows for the DataFrame
+    rows_to_update = []
+
+    # Initialize a list to store JSON objects
+    json_updates = []
+
     for row in orgs:
         session = requests.Session()
         session.mount("https://", adapter)
@@ -146,11 +189,12 @@ def update_externalorg_pure(orgs, test_choice, update):
             'api-key': PURE_API_KEY,
         }
 
-        url = PURE_BASE_URL +  'external-organizations/' + row['uuid']
+        url = PURE_BASE_URL + 'external-organizations/' + row['uuid']
         response = session.get(url, headers=headers, verify=False)
         logging.debug(f"get org data {row['uuid']}. responsecode = {response.status_code}")
-        data = response.json()  # Directly parse JSON response
+        data = response.json()  # Parse JSON response
         new_ror = None
+
         if row['ror']:
             new_ror = {
                 "typeDiscriminator": "ClassifiedId",
@@ -162,27 +206,73 @@ def update_externalorg_pure(orgs, test_choice, update):
                     }
                 }
             }
-        print('hier')
-        print(row['ror'])
-        # Check if the new ror exists
-        # ror_exists = new_ror and identifier_exists(data.get('identifiers', []), new_ror['id'],
-        #                                                new_ror['type']['uri'])
-        print(new_ror)
-        # Initialize identifiers if not already present
+
         if 'identifiers' not in data:
             data['identifiers'] = []
-        # Add the new ror if it does not already exist and the ID is not empty
-        if new_ror:
-            data['identifiers'].append(new_ror)
-            logger.debug(f"update of uuid {row['uuid']}, ror, {new_ror}")
-            update += 1
-            if test_choice == 'no':
-                response = session.put(url, headers=headers, json=data, verify=False)
-                if response.status_code != 200:
-                    logger.debug(f"Failed to update data for UUID {row['uuid']}: {response.text}")
-                else:
-                    logger.debug(f"Successfully updated data for UUID {row['uuid']}, ror, {new_ror}")
-                session.close()
+
+        # Check if the new ROR is already in the identifiers
+        if new_ror and new_ror not in data['identifiers']:
+            # Mark as "to be updated"
+            rows_to_update.append({
+
+                'to_be_updated': 'X',
+                'updated': ' ',
+                'uuid': row['uuid'],
+                'ror': row['ror']
+            })
+
+            # Add the JSON to the big JSON list
+            json_updates.append(data)
+
+        session.close()
+
+    # Save the DataFrame
+    df = pd.DataFrame(rows_to_update)
+    df.to_csv(os.path.join(output_dir, "external_orgs_to_update.csv"), index=False)
+
+    # Save the big JSON file
+    with open(os.path.join(output_dir, "external_orgs_updates.json"), 'w') as json_file:
+        json.dump(json_updates, json_file, indent=4)
+    # for row in orgs:
+    #     session = requests.Session()
+    #     session.mount("https://", adapter)
+    #
+    #     headers = {
+    #         'Accept': 'application/json',
+    #         'api-key': PURE_API_KEY,
+    #     }
+    #
+    #     url = PURE_BASE_URL +  'external-organizations/' + row['uuid']
+    #     response = session.get(url, headers=headers, verify=False)
+    #     logging.debug(f"get org data {row['uuid']}. responsecode = {response.status_code}")
+    #     data = response.json()  # Directly parse JSON response
+    #     new_ror = None
+    #     if row['ror']:
+    #         new_ror = {
+    #             "typeDiscriminator": "ClassifiedId",
+    #             "id": row['ror'],
+    #             "type": {
+    #                 "uri": ROR_ID_URI,
+    #                 "term": {
+    #                     "en_GB": "ROR ID"
+    #                 }
+    #             }
+    #         }
+    #
+    #     if 'identifiers' not in data:
+    #         data['identifiers'] = []
+    #     # Add the new ror if it does not already exist and the ID is not empty
+    #     if new_ror:
+    #         data['identifiers'].append(new_ror)
+    #         logger.debug(f"update of uuid {row['uuid']}, ror, {new_ror}")
+    #         update += 1
+    #         if test_choice == 'no':
+    #             response = session.put(url, headers=headers, json=data, verify=False)
+    #             if response.status_code != 200:
+    #                 logger.debug(f"Failed to update data for UUID {row['uuid']}: {response.text}")
+    #             else:
+    #                 logger.debug(f"Successfully updated data for UUID {row['uuid']}, ror, {new_ror}")
+    #             session.close()
 
 
     return update
@@ -246,6 +336,7 @@ def select_persons_researchoutput(selected_faculties):
                 outputs = select_researchoutputs(personroot_key)
                 for output in outputs:
                     doi = output["_key"].split("|")[0]
+
                     new_data.append(doi)
                     # print(doi)
                     # if 'Pure-uu' in output["_source"] and 'OpenAlex-uu' in output["_source"]:
@@ -279,7 +370,7 @@ def fetch_openalex_rors(rors, chunk_size=20):
     rors = list(rors)
     ror_chunks = list(chunk_list(rors, chunk_size))
     all_results = []
-
+    logger.info(f"start fetching organizations in open alex")
     with requests.Session() as session:
         for chunk in ror_chunks:
             ror_filter = "|".join(chunk)
@@ -291,6 +382,7 @@ def fetch_openalex_rors(rors, chunk_size=20):
             else:
                 print(f"Error: {response.status_code}")
     all_results = {"results": all_results}
+    logger.info(f"end fetching organizations in open alex")
     return all_results
 
 
@@ -320,8 +412,8 @@ def fetch_pure_extorgs(uuids):
     # Loop over each batch and make a request
     for batch_index, batch in enumerate(batches):
         pipe_separated_dois = "|".join(batch)
-        logger.debug(
-            f"Finding research outputs for batch {batch_index + 1}/{len(batches)}, {batch_size} DOIs per batch.")
+        logger.info(
+            f"Finding ext orgs for batch {batch_index + 1}/{len(batches)}, {batch_size} DOIs per batch.")
         json_data = {
             'size': 100,  # Set size to batch size
             'searchString': pipe_separated_dois,
@@ -349,14 +441,14 @@ def fetch_pure_extorgs(uuids):
 
         except requests.exceptions.RequestException as e:
             logger.error(f"Error occurred while processing batch {batch_index + 1}: {e}")
-
+   # logger.info(f"Total matching research outputs found: {len(pureworks['results'])}")
         # Optional: Add a delay between requests to avoid hitting rate limits
         time.sleep(request_delay)
 
     # Combine all works into one JSON object
     orgs = {"results": all_orgs}
-    # logger.info(f"Total matching research outputs found: {len(pureworks['results'])}")
     logger.info(f"Total matching external orgs found: {str(total_items)}")
+
     return orgs
 
 
@@ -464,14 +556,26 @@ def main(faculty_choice, test_choice):
         article_orgs, uuids, oa_ids = mainproces(doi, purejsons, openalexjsons, article_orgs, uuids, oa_ids)
 
     pure_orgsjsons = fetch_pure_extorgs(uuids)
-    openalex_orgjsons = fetch_openalex_rors(oa_ids)
 
+    openalex_orgjsons = fetch_openalex_rors(oa_ids)
+    all_orgs_to_update = []
     for article in article_orgs:
          pure_org_details = get_ext_orgdata_pure(article['external_organization_uuids'], pure_orgsjsons)
          oa_org_details = get_ext_orgdata_openalex(article['unique_institutions'], openalex_orgjsons)
-         orgs_to_update = match_organizations(pure_org_details, oa_org_details)
-         update = update_externalorg_pure(orgs_to_update, test_choice, update)
-    logging.info(f"nr of ext orgs updated: {update}")
+         orgs_to_update = match_organizations(pure_org_details, oa_org_details, )
+         all_orgs_to_update.extend(orgs_to_update)
+         # for org in orgs_to_update:
+         #
+         #     # Ensure each item in orgs_to_update is a dictionary with 'uuid' and 'ror' keys
+         #     if isinstance(org, dict) and 'uuid' in org and 'ror' in org:
+         #         rorsuiids.append((org['uuid'], org['ror']))
+         # update = update_externalorg_pure(orgs_to_update, test_choice, update)
+    logger.info(f"nr of ext orgs that can be  updated: {len(all_orgs_to_update)}")
+    # unique_rorsuiids = list(set(rorsuiids))
+    # with open('output.csv', mode='w', newline='') as file:
+    #     writer = csv.writer(file)
+    #     writer.writerows(unique_rorsuiids)
+
 
 # ########################################################################
 # MAIN
@@ -479,10 +583,10 @@ def main(faculty_choice, test_choice):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Update external persons from Ricgraph')
     parser.add_argument('faculty_choice', type=str, nargs='?',
-                        # default='uu faculty: faculteit geesteswetenschappen|organization_name',
-                        default='uu faculty: information & technology services|organization_name',
+                        default='uu faculty: faculteit rebo|organization_name',
+                        # default='uu faculty: information & technology services|organization_name',
                         help='Faculty choice or "all"')
-    parser.add_argument('test_choice', type=str, nargs='?', default='yes', help='Run in test mode ("yes" or "no")')
+    parser.add_argument('test_choice', type=str, nargs='?', default='no', help='Run in test mode ("yes" or "no")')
 
     args = parser.parse_args()
 

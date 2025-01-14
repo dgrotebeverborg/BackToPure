@@ -1,22 +1,42 @@
 # ########################################################################
+# Script: datacite_utils.py
 #
-# Datacite utilities - function modules for getting datasets from datacite
+# Description:
+# This script provides **main functions** for interacting with the DataCite API,
+# fetching metadata for datasets based on DOIs, and formatting the data into
+# pandas DataFrames. It is meant to be imported as a module by other scripts and
+# should not be executed standalone.
 #
-# ########################################################################
+# Functions include:
+# - Fetching metadata for a single DOI and parsing it.
+# - Fetching metadata for multiple DOIs using multi-threading.
+# - Formatting parsed data into a pandas DataFrame.
 #
+# Important:
+# This script is a utility module and is intended to be used by other scripts.
+#
+# Dependencies:
+# - requests, pandas, json, concurrent.futures, logging, etc.
+#
+# Author: David Grote Beverborg
+# Created: 2024
+#
+# License:
 # MIT License
 #
 # Copyright (c) 2024 David Grote Beverborg
 # ########################################################################
 
+
 import requests
-import json
+
 import pandas as pd
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 import logging
 from logging_config import setup_logging
 logger = setup_logging('dataset', level=logging.INFO)
+
 def get_first_affiliation_name(affiliations):
     if isinstance(affiliations, list) and affiliations:
         # Assume each item in the list is a dictionary with a 'name' key
@@ -107,11 +127,11 @@ def get_df_from_datacite(datasets):
 
 
     df = pd.DataFrame(valid_results)
-    logger.info("datasets found in open alex: " + str(df.shape[0]))
-    file_path = "datasets.xlsx"
-    logger.info("downloaded datasets in: " + file_path)
-    # Save the dataframe to an Excel file
-    df.to_excel(file_path, index=False)
+    # logger.info("datasets found in open alex: " + str(df.shape[0]))
+    # file_path = "datasets.xlsx"
+    # logger.info("downloaded datasets in: " + file_path)
+    # # Save the dataframe to an Excel file
+    # df.to_excel(file_path, index=False)
     return df
 
 def main():

@@ -1,32 +1,34 @@
 # ########################################################################
+# Script: pure_researchoutputs.py
 #
-# pure research outputs - import module that uses a an export of dois of
-# Ricgraph to import research outputs in Pure. The metadata is imported
-# from open alex
-# ########################################################################
+# Description:
+# This script contains **main functions** for importing research outputs into
+# Pure using metadata from OpenAlex. It is intended to be used as a module
+# by the `update_researchoutput_from_ricgraph.py` script and should not be
+# run independently.
 #
+# Functions include:
+# - Retrieving research outputs and journals from Pure.
+# - Creating external persons and organizations.
+# - Formatting research output metadata into the required JSON structure.
+# - Constructing and submitting the JSON payload to the Pure API.
+#
+# Important:
+# Do not run this script standalone. It is called as a module by
+# `update_researchoutput_from_ricgraph.py`.
+#
+# Dependencies:
+# - pandas, json, requests, configparser, dateutil, logging, etc.
+#
+# Author: David Grote Beverborg
+# Created: April 2024
+#
+# License:
 # MIT License
 #
 # Copyright (c) 2024 David Grote Beverborg
 # ########################################################################
-#
-# This file contains example code for Ricgraph.
-#
-# With this code, you can harvest persons and research outputs from OpenAlex.
-# You have to set some parameters in ricgraph.ini.
-# Also, you can set a number of parameters in the code following the "import" statements below.
-#
-# Original version David Grote Beverborg, april 2024
-#
-# ########################################################################
-#
-# Usage
-#
-# Options:
-#   --source options <Yoda|Ricgraph>
-#
-#
-# ########################################################################
+
 
 import pandas as pd
 import json
@@ -40,6 +42,8 @@ from logging_config import setup_logging
 import logging.handlers
 from dateutil import parser
 from config import PURE_BASE_URL, PURE_API_KEY, OPENALEXEX_ID_URI, ORCID_ID_URI, OPENALEX_HEADERS, OPENALEX_BASE_URL, PURE_HEADERS
+import time
+import sys
 logger = setup_logging('btp', level=logging.INFO)
 def get_researchoutput(uuid):
     headers = PURE_HEADERS
@@ -112,41 +116,51 @@ def find_external_person(person_ids):
     orcid = None
     openalex = None
     first_uuid = None
+
+    # Extract ORCID and OpenAlex before the API calls
     for id_type, id_value in person_ids.items():
-
         if id_type.lower() == 'orcid':
-            id_value = pure_persons.extract_orcid(id_value)
-            orcid = id_value
+            orcid = pure_persons.extract_orcid(id_value)
+        elif id_type.lower() == 'openalex':
+            openalex = id_value.replace("https://openalex.org/", "")
 
-        if id_type.lower() == 'openalex':
-            id_value = id_value.replace("https://openalex.org/", "")
-            openalex = id_value
+    # Perform API searches
+    for id_type, id_value in person_ids.items():
+        if id_type.lower() == 'orcid' and orcid:
+            id_value = orcid
+        elif id_type.lower() == 'openalex' and openalex:
+            id_value = openalex
 
         data = {"searchString": id_value}
-        json_data = json.dumps(data)
         api_url = PURE_BASE_URL + 'external-persons/search/'
+
+        logger.debug(f"Searching for {id_type}: {id_value} with payload: {data}")
+
         try:
-            response = requests.post(api_url, headers=PURE_HEADERS, data=json_data)
+            response = requests.post(api_url, headers=PURE_HEADERS, json=data)  # Using json=data
+            logger.debug(f"Response status code: {response.status_code}")
+
             if response.status_code == 200:
-                data = response.json()
-                items = data.get('items', [])
+                response_data = response.json()
+                items = response_data.get('items', [])
 
                 if items:
-                    if len(items) == 1:
+                    first_uuid = items[0].get('uuid')
+                    logger.debug(f"Person found with {id_type}: {id_value}, UUID: {first_uuid}")
 
-                        # Extract the UUID of the first item in the "items" list
-                        first_uuid = data['items'][0]['uuid']
-                        logger.debug(f"Person found with {id_type}: {id_value}")
-
-
-                    else:
-                        logger.debug(f"Multiple or no persons found for {id_type}, {id_value}")
+                    # Stop looping if UUID is found but ensure ORCID and OpenAlex IDs are processed
+                    if first_uuid:
+                        break  # Exit loop since we found the UUID
             else:
                 logger.debug(f"Error searching for {id_type}: {response.status_code} - {response.text}")
+
         except requests.RequestException as e:
             logger.debug(f"An error occurred while searching for {id_type}: {e}")
 
     return first_uuid, orcid, openalex
+
+
+
 
 
 def find_extenal_orgs(affiliations):
@@ -181,7 +195,7 @@ def find_extenal_orgs(affiliations):
     return first_uuid
 
 
-def get_contributors_details(contributors, ref_date, test):
+def get_contributors_details(contributors, ref_date):
     persons = {}
     found_internal_person = False
 
@@ -205,26 +219,23 @@ def get_contributors_details(contributors, ref_date, test):
                 # if not create external person
                 # same for affiliations of external person
                 external_person_uuid, orcid, openalex = find_external_person(contributor['ids'])
-
                 externalorg = find_extenal_orgs(contributor['affiliations'])
 
-                if test == 'no':
+                if not external_person_uuid:
 
-                    if not external_person_uuid:
-                        external_person_uuid = create_external_person(contributor['first_name'],contributor['last_name'], orcid, openalex)
-
-                    if external_person_uuid:
-                        logger.debug(f'Created external person: {external_person_uuid}')
-                        persons[contributor_id] = {
-                            "external_person_extorgui": externalorg,
-                            "external_person_uuid": external_person_uuid,
-                            "external_person_first_name": contributor['first_name'],
-                            "external_person_last_name": contributor['last_name']
-                        }
-                    else:
-                        logger.error(f"Failed to create external person for {contributor_id}")
+                    external_person_uuid = create_external_person(contributor['first_name'],contributor['last_name'], orcid, openalex)
+                if external_person_uuid:
+                    logger.debug(f'Created external person: {external_person_uuid}')
+                    persons[contributor_id] = {
+                        "external_person_extorgui": externalorg,
+                        "external_person_uuid": external_person_uuid,
+                        "external_person_first_name": contributor['first_name'],
+                        "external_person_last_name": contributor['last_name']
+                    }
+                else:
+                    logger.error(f"Failed to create external person for {contributor_id}")
     else:
-        logger.error("No internal contributors found in Pure for the research output.")
+        logger.debug("No internal contributors found in Pure for the research output.")
         return None
 
     return persons
@@ -612,77 +623,108 @@ def check_research_in_pure(doi):
             for version in electronic_versions:
                 if 'doi' in version:
                     full_doi_url = version['doi']
-
                     if doi == full_doi_url:
-
                         exists_in_pure = True
                         logger.debug(f"{doi}: already in pure")
 
     return exists_in_pure
 
 
-def df_to_pure(df, test):
+def df_to_pure(df):
+    # Initialize a list to collect all research output JSONs
+    research_output_collection = []
+    success = 0
     error = 0
-    succes = 0
     inpure = 0
-    for _, row in df.iterrows():
-        logger.debug('processing', row['title'])
-        exists_in_pure = check_research_in_pure(row['doi'])
-        if exists_in_pure is False:
-            contributors_details = get_contributors_details(row['contributors'], row['publication_date'], test)
-            if contributors_details:
-                row['parsed_contributors'] = format_contributors(contributors_details)
-                row['parsed_organizations'], row['formatted_ext_organizations'], row['managing_org'] = format_organizations_from_contributors(
-                    contributors_details)
-                row = format_rest(row)
-                row, error = unique_fields_per_type(row)
-                if error == False:
-                    # Construct the research output JSON
-                    research_output_json = construct_research_output_json(row)
-                    succes = succes + 1
-                    if test == 'no':
-                        uuid_ro = create_research_output(research_output_json)
+
+    # Initialize a list to hold rows for the "to be updated" DataFrame
+    to_be_updated_rows = []
+    logger.info('Formatting the output in Pure needed JSON format. This is a slow process, you might want to get some coffee...')
+    for index, row in df.iterrows():
+        if index % 25 == 0:  # Print progress every 5 iterations
+            print(f"Processing: {index}", flush=True)
+            time.sleep(0.1)  # Simulate work
+
+        try:
+            logger.debug('Processing research output: %s', row['title'])
+
+            # Check if the research output exists in Pure
+            exists_in_pure = check_research_in_pure(row['doi'])
+
+            if not exists_in_pure:
+                # Get contributor details
+                contributors_details = get_contributors_details(row['contributors'], row['publication_date'])
+                if contributors_details:
+                    # Format and enrich row data
+                    row['parsed_contributors'] = format_contributors(contributors_details)
+                    parsed_orgs, formatted_ext_orgs, managing_org = format_organizations_from_contributors(
+                        contributors_details)
+                    row['parsed_organizations'] = parsed_orgs
+                    row['formatted_ext_organizations'] = formatted_ext_orgs
+                    row['managing_org'] = managing_org
+
+                    # Additional formatting and validation
+                    enriched_row = format_rest(row)
+                    enriched_row, error_flag = unique_fields_per_type(enriched_row)
+
+                    if not error_flag:
+                        research_output_json = construct_research_output_json(enriched_row)
+                        research_output_collection.append(research_output_json)  # Add to the collection
+
+                        # Add data to 'to be updated' list
+                        to_be_updated_rows.append({
+                            'to_be_updated': 'x',
+                            'updated': ' ',
+                            'doi': row['doi'],
+                            'title': row['title']
+                        })
+
+                        success += 1
                     else:
+                        logger.debug(f"Validation failed for research output {row['research_output_id']}.")
                         error += 1
                 else:
+                    logger.debug(
+                        f"Skipped research output {row['research_output_id']} due to missing contributor details.")
                     error += 1
             else:
-                logger.warning(f"skipped research output {row['research_output_id']}.")
-                error += 1
-        else:
-            inpure += 1
+                inpure += 1
+                logger.debug(f"already in pure {row['doi']}.")
+        except Exception as e:
+            logger.debug(f"Error processing row {index}: {e}")
+            error += 1
 
-    logger.info(f"{error}: errors, see log for more info")
-    logger.info(f"{succes}: successes")
-    logger.info(f"{inpure}: already in pure")
+    # Save the collected research outputs to a JSON file
+    output_dir = 'output/research_output'
+    os.makedirs(output_dir, exist_ok=True)  # Ensure the output directory exists
+    output_file = os.path.join(output_dir, 'output_to_be_updated.json')
+    logger.info(f"{error} items cannot be imported in pure, see log for more info")
+    logger.info(f"{success} items can be updated")
+    logger.info(f"{inpure} items are already in pure")
+    logger.info(f"Research output that can be imported are in file: {output_file}")
+    logger.info(f"Please open that file to check if you want them all to be updated")
+    logger.info(f"if not, please remove the 'X' for that row in the column 'to_be_updated'")
+
+    try:
+        with open(output_file, 'w', encoding='utf-8') as f:
+            json.dump(research_output_collection, f, ensure_ascii=False, indent=4)
+        logger.debug(f"Successfully saved research outputs to {output_file}.")
+    except Exception as e:
+        logger.error(f"Failed to save research outputs: {e}")
+
+    # Create and save the "to be updated" DataFrame
+    to_be_updated_df = pd.DataFrame(to_be_updated_rows)
+    csv_output_file = os.path.join(output_dir, 'to_be_updated.csv')
+
+    try:
+        to_be_updated_df.to_csv(csv_output_file, index=False, encoding='utf-8')
+        logger.debug(f"Successfully saved 'to be updated' DataFrame to {csv_output_file}.")
+    except Exception as e:
+        logger.error(f"Failed to save 'to be updated' DataFrame: {e}")
 
 
-def main():
-    OPENALEX_HEADERS = {'Accept': 'application/json',
-                       # The following will be read in __main__
-                       'User-Agent': 'mailto:d.h.j.grotebeverborg@uu.nl'
-                       }
-    OPENALEX_MAX_RECS_TO_HARVEST = 3
 
 
-    # # List to hold all responses
-    # all_openalex_data = []
-    #
-    # # Loop through each DOI and make a request
-    # for doi in dois:
-    #     url = 'https://api.openalex.org/works/' + doi
-    #     response = requests.get(url, headers=OPENALEX_HEADERS)
-    #
-    #     if response.status_code == 200:
-    #         openalex_data = response.json()
-    #         all_openalex_data.append(openalex_data)
-    #     else:
-    #         print(f"Failed to retrieve data for DOI: {doi}")
-    #
-    # df, errors = openalex_utils.transform_openalex_to_df(all_openalex_data)
-    # df_to_pure(df)
 
-if __name__ == '__main__':
-    main()
 
 

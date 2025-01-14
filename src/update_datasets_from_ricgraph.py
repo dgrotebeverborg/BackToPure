@@ -1,11 +1,49 @@
-import configparser
+# ########################################################################
+# Script: update_datasets_from_ricgraph.py
+#
+# Description:
+# This script retrieves dataset DOIs from Ricgraph and compares them with
+# datasets in the Pure system. If a dataset is missing in Pure, metadata is
+# retrieved, formatted, and saved for import. The script supports running in
+# test mode.
+#
+# The script includes:
+# - Fetching a list of faculties and selecting datasets by faculty.
+# - Fetching datasets associated with person nodes from Ricgraph.
+# - Comparing datasets between Ricgraph and Pure.
+# - Creating JSON files for datasets that can be imported into Pure.
+#
+# Steps:
+# 1. Retrieve a list of faculties.
+# 2. Fetch persons and their associated datasets by faculty.
+# 3. Compare datasets in Ricgraph and Pure.
+# 4. Create a JSON file for import and a CSV for manual verification.
+#
+# Important:
+# This script calls utility modules such as `datacite_utils.py` and `pure_datasets.py`.
+# Do not run this script without the dependencies.
+#
+# Dependencies:
+# - requests, pandas, datacite_utils, pure_datasets, argparse, logging, etc.
+#
+# Author: David Grote Beverborg
+# Created: 2024
+#
+# License:
+# MIT License
+#
+# Copyright (c) 2024 David Grote Beverborg
+# ########################################################################
+
 import logging
 import requests
 import datacite_utils
+import time
 import pure_datasets as puda
-import sys
+import pandas as pd
+import os
 import argparse
-from config import PURE_BASE_URL, PURE_API_KEY, PURE_HEADERS, RIC_BASE_URL, OPENALEX_HEADERS, OPENALEX_BASE_URL
+from config import RIC_BASE_URL
 from logging_config import setup_logging
 
 logger = setup_logging('dataset', level=logging.INFO)
@@ -32,7 +70,7 @@ def fetch_personroots(faculty_key):
 
         return response.json().get("results", [])
     except requests.RequestException as e:
-        logging.error(f"Error fetching person-roots for faculty {faculty_key}: {e}")
+        logger.error(f"Error fetching person-roots for faculty {faculty_key}: {e}")
         return []
 
 def select_faculties(faculty_choice):
@@ -93,7 +131,7 @@ def select_datasets(persoonroot_key):
 
         return response.json().get("results", [])
     except requests.RequestException as e:
-        logging.error(f"Error fetching person IDs for person-root {persoonroot_key}: {e}")
+        logger.error(f"Error fetching person IDs for person-root {persoonroot_key}: {e}")
         return []
 def test_or_not(datasets):
     number_of_datasets = len(datasets)
@@ -103,38 +141,78 @@ def test_or_not(datasets):
     return choice
 
 
-def df_to_pure(df, created, ignored, test_choice):
+def df_to_pure(df, created, ignored, no_internal):
+    dataset_collection = []
+    to_be_updated_rows = []
+    logger.info(
+        'Formatting the output in Pure needed JSON format. This is a slow process, you might want to get some coffee...')
     for _, row in df.iterrows():
+
+        if _ % 10 == 0:  # Print progress every 5 iterations
+
+            logger.info(f"Processing: {_}")
+            # print(f"Processing: {_}", flush=True)
+            time.sleep(0.1)  # Simulate work
+
         already_in_pure = puda.find_dataset(None, row['doi'])
         if already_in_pure:
-            logger.warning(f"dataset with doi: {row['doi']}, already in pure")
+            logger.debug(f"dataset with doi: {row['doi']}, already in pure")
             ignored += 1
         else:
-            contributors_details = puda.get_contributors_details(row['persons'], row['created'], test_choice)
+            contributors_details = puda.get_contributors_details(row['persons'], row['created'])
 
             if contributors_details is not None:
                 row['parsed_contributors'] = puda.format_contributors(contributors_details)
                 row['parsed_organizations'], row['managing_org'] = puda.format_organizations_from_contributors(
                     contributors_details)
 
-                if test_choice == 'no':
-                    dataset_json = puda.construct_dataset_json(row)
-                    uuid_ds = puda.create_dataset(dataset_json)
-                    if not uuid_ds == 'error':
-                       created += 1
-                    else:
-                        ignored += 1
-                        logger.debug('error creating dataset: ' + row['title'])
-                else:
+                dataset_json = puda.construct_dataset_json(row)
+                if dataset_json:
+                    dataset_collection.append(dataset_json)
+                    # Add data to 'to be updated' list
+                    to_be_updated_rows.append({
+                        'to_be_updated': 'x',
+                        'updated': ' ',
+                        'doi': row['doi'],
+                        'title': row['title']
+                    })
                     created += 1
+
+                    # uuid_ds = puda.create_dataset(dataset_json)
+                    # if not uuid_ds == 'error':
+                    #    created += 1
+                    # else:
+                    #     ignored += 1
+                    #     logger.debug('error creating dataset: ' + row['title'])
+
             else:
-                ignored += 1
+                no_internal += 1
 
-    return created, ignored
+    output_dir = 'output/datasets'
+    os.makedirs(output_dir, exist_ok=True)  # Ensure the output directory exists
+    output_file = os.path.join(output_dir, 'datasets_to_be_updated.json')
+    try:
+        with open(output_file, 'w', encoding='utf-8') as f:
+            json.dump(dataset_collection, f, ensure_ascii=False, indent=4)
+        logger.debug(f"Successfully saved datasets to {output_file}.")
+    except Exception as e:
+        logger.error(f"Failed to save datasets: {e}")
+
+    # Create and save the "to be updated" DataFrame
+    to_be_updated_df = pd.DataFrame(to_be_updated_rows)
+    csv_output_file = os.path.join(output_dir, 'to_be_updated.csv')
+
+    try:
+        to_be_updated_df.to_csv(csv_output_file, index=False, encoding='utf-8')
+        logger.debug(f"Successfully saved 'to be updated' DataFrame to {csv_output_file}.")
+    except Exception as e:
+        logger.error(f"Failed to save 'to be updated' DataFrame: {e}")
+
+    return created, ignored, no_internal
 
 
-def main(faculty_choice, test_choice):
-
+def main(faculty_choice):
+    print("test")
     faculties = select_faculties(faculty_choice)
     datasets = select_persons_datasets(faculties, faculty_choice)
 
@@ -143,10 +221,14 @@ def main(faculty_choice, test_choice):
 
     created = 0
     ignored = 0
+    no_internal = 0
+    created, ignored, no_internal = df_to_pure(df, created, ignored, no_internal)
 
-    created, ignored = df_to_pure(df, created, ignored, test_choice)
-
-    logger.info(f"Process completed. created datasets: {created}, skipped: {ignored}")
+    logger.info(f"Process completed. datasets that can be imported: {created}")
+    logger.info(f"Process completed. datasets that are already in pure: {ignored}")
+    logger.info(f"Process completed. datasets that have no internal persons: {no_internal}")
+    logger.info("Script part 1 to import datasets in pure from ricgraph has ended")
+    logger.info("Please look at the update file and uncheck items you do not want to be imported, then proceed to import them in pure via *Apply Update to Pure*")
 
 # ########################################################################
 # MAIN
@@ -161,4 +243,4 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    main(args.faculty_choice, args.test_choice)
+    main(args.faculty_choice)

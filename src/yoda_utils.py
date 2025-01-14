@@ -1,14 +1,32 @@
 # ########################################################################
+# Script: yoda_utils.py
 #
-# Yoda utilities - function modules for getting datasets reading an export
-# from Yoda
+# Description:
+# This script provides **main functions** for reading dataset exports from Yoda,
+# parsing JSON data, and converting it into pandas DataFrames. It is intended to
+# be imported as a module and should not be run standalone.
 #
-# ########################################################################
+# Functions include:
+# - Loading JSON files safely and parsing metadata.
+# - Extracting contributor and creator information.
+# - Formatting dataset metadata and dates.
 #
+# Important:
+# This script is a utility module for Yoda data processing and should be used
+# as part of other scripts.
+#
+# Dependencies:
+# - json, pandas, logging, configparser, datetime, etc.
+#
+# Author: David Grote Beverborg
+# Created: 2024
+#
+# License:
 # MIT License
 #
 # Copyright (c) 2024 David Grote Beverborg
 # ########################################################################
+
 
 import json
 import pandas as pd

@@ -167,7 +167,7 @@ def create_external_person(first_name, last_name, orcid):
         logger.error(f"An error occurred while creating external person: {e}")
 
     return None
-def get_contributors_details(contributors, ref_date, test):
+def get_contributors_details(contributors, ref_date):
     persons = {}
     found_internal_person = False
 
@@ -184,8 +184,6 @@ def get_contributors_details(contributors, ref_date, test):
         else:
             # Mark as None for now
             persons[contributor_id] = None
-
-
             # Second pass: Find/Create external persons only if an internal person is found
     if found_internal_person:
         for contributor in contributors:
@@ -202,15 +200,15 @@ def get_contributors_details(contributors, ref_date, test):
 
                 # externalorg = pure_persons.find_extenal_orgs(contributor['affiliations'])
                 externalorg = None
-                if test == 'no':
-                    if not external_person_uuid:
-                        orcid = ''
-                        for id_type, id_value in contributor['person_ids'].items():
 
-                            if id_type.lower() == 'orcid':
-                                orcid = id_value
-                        external_person_uuid = create_external_person(contributor['first_name'],contributor['last_name'], orcid)
-                        logging.debug(f'Created external person: {external_person_uuid}')
+                if not external_person_uuid:
+                    orcid = ''
+                    for id_type, id_value in contributor['person_ids'].items():
+
+                        if id_type.lower() == 'orcid':
+                            orcid = id_value
+                    external_person_uuid = create_external_person(contributor['first_name'],contributor['last_name'], orcid)
+                    logging.debug(f'Created external person: {external_person_uuid}')
 
                 if external_person_uuid:
 
@@ -232,7 +230,8 @@ def get_contributors_details(contributors, ref_date, test):
                     }
                     logging.error(f"Failed to create external person for {contributor_id}")
     else:
-        logging.error("No internal contributors found in Pure for the dataset.")
+        persons ={}
+        logger.debug("No internal contributors found in Pure for the dataset.")
         return None
 
     return persons

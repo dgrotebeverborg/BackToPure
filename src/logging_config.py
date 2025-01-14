@@ -4,47 +4,43 @@ import os
 import datetime
 import sys
 def setup_logging(script_name, level=logging.DEBUG):
-
+    # Create log directory if it doesn't exist
     log_dir = 'logs'
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)
-    logtime = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    # log_file = os.path.join(log_dir, f'{script_name}{logtime}.log')
+
+    # Set up log file path
     log_file = os.path.join(log_dir, f'{script_name}.log')
-    logging.basicConfig(
-        level=level,
-        format='%(asctime)s %(name)s %(levelname)s %(message)s',
-        handlers=[
-            logging.FileHandler(log_file),
-            logging.StreamHandler(sys.stdout)  # Explicitly log to stdout
-        ]
+
+    # Create a logger with the desired settings
+    logger = logging.getLogger(script_name)
+    logger.propagate = False  # Prevent duplicate logs by disabling propagation
+    logger.setLevel(logging.INFO)
+
+
+    # Ensure no duplicate handlers
+    for handler in logger.handlers[:]:
+        logger.removeHandler(handler)
+
+    # Define a common log format without milliseconds
+    log_format = '%(asctime)s %(levelname)s %(message)s'
+    date_format = '%Y-%m-%d %H:%M:%S'
+
+    # Create a file handler to save logs
+    file_handler = logging.FileHandler(log_file)
+    file_handler.setLevel(logging.INFO)
+    file_handler.setFormatter(
+        logging.Formatter(log_format, datefmt=date_format)
     )
 
-    logger = logging.getLogger(script_name)
-    #
-    # log_dir = 'logs'
-    # if not os.path.exists(log_dir):
-    #     os.makedirs(log_dir)
-    # log_file = os.path.join(log_dir, f'{script_name}.log')
-    #
-    # # Create a new logger for each script
-    # logger = logging.getLogger(script_name)
-    #
-    # # Prevent adding handlers multiple times
-    # if not logger.hasHandlers():
-    #     # Set level
-    #     logger.setLevel(level)
-    #
-    #     # Create handlers
-    #     file_handler = RotatingFileHandler(log_file, maxBytes=max_bytes, backupCount=backup_count)
-    #     stream_handler = logging.StreamHandler()
-    #
-    #     # Create formatter and add it to handlers
-    #     formatter = logging.Formatter('%(asctime)s %(name)s %(levelname)s %(message)s')
-    #     file_handler.setFormatter(formatter)
-    #     stream_handler.setFormatter(formatter)
-    #
-    #     # Add handlers to the logger
-    #     logger.addHandler(file_handler)
-    #     logger.addHandler(stream_handler)
+    # Create a stream handler to log to stdout (for real-time streaming)
+    stream_handler = logging.StreamHandler(sys.stdout)
+    stream_handler.setLevel(logging.INFO)
+    stream_handler.setFormatter(
+        logging.Formatter(log_format, datefmt=date_format)
+    )
+
+    # Add the handlers to the logger
+    logger.addHandler(file_handler)
+    logger.addHandler(stream_handler)
     return logger

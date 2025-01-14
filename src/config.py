@@ -2,6 +2,7 @@ import configparser
 import os
 
 config_path = os.path.join(os.path.dirname(__file__), 'config.ini')
+
 if not os.path.exists(config_path):
     raise FileNotFoundError(f"The configuration file {config_path} does not exist.")
 
@@ -33,5 +34,5 @@ PURE_HEADERS = {
 }
 
 OPENALEX_HEADERS = {'Accept': 'application/json',
-                    'User-Agent': 'mailto:d.h.j.grotebeverborg@uu.nl'
+                    'User-Agent': EMAIL
                     }

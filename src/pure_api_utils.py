@@ -34,7 +34,7 @@ def construct_research_output_json(research_output_id, title, contributors, jour
     :return: A dictionary representing the research output in the defined JSON format.
     """
 
-    print('kom ik hier dan')
+
     parsed_contributors = format_contributors(contributors)
     parsed_organizations = format_organizations_from_contributors(contributors)
 
