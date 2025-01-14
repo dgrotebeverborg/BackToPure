@@ -1,0 +1,196 @@
+2025-01-13 10:32:58 INFO Script to update external persons in pure from ricgraph has started
+2025-01-13 10:32:58 INFO The script performs the following steps:
+1. **Person Root Node Retrieval**: Retrieves all person-root nodes from Ricgraph for the selected faculty and fetches the associated person IDs.
+2. **Enrichment Check**: Checks if each external person already has the required identifiers in Pure. Prepares to update missing information if needed.
+3. **Update file**: Produces a file with all of the persons that can be updated, with the new ids. after the first part is finished, you can access that file. You must check that file, and remove unwanted updates
+4. **Person Data Update**: After you have checked the file a new button appears that sends the updates to pure.
+
+**Note:** The process may take a while before log items appear on the screen, especially if a large faculty is chosen.
+2025-01-13 10:32:58 INFO start fetching person-roots for uu faculty: university college utrecht|organization_name
+2025-01-13 10:32:59 INFO total pubs found in Ricgraph: 48
+2025-01-13 10:32:59 INFO Start fetching research outputs from Pure API
+2025-01-13 10:32:59 INFO Processing batch 1/1
+2025-01-13 10:33:07 INFO Total matching research outputs found: 100
+2025-01-13 10:33:08 INFO Total number of works fetched from Open Alex: 31
+2025-01-13 10:33:08 INFO total persons matched: 204
+2025-01-13 10:33:08 INFO start fetching external persons from pure
+2025-01-13 10:33:10 INFO end fetching pure
+2025-01-13 10:33:10 INFO Matching external persons found: 101
+2025-01-13 10:33:10 INFO start updating external persons from pure
+2025-01-13 10:33:10 INFO Saved 93 persons to output/external_persons/to_be_updated.json
+2025-01-13 10:33:10 INFO Saved 93 rows to output/external_persons/ext_pers_update.csv
+2025-01-13 10:33:10 INFO end updating external persons from pure
+2025-01-13 10:33:10 INFO total external persons updated: 93
+2025-01-13 10:33:10 INFO total external persons not updated (already has ids, or no ids found): 111
+2025-01-13 10:33:10 INFO Script import research output part 1 has ended, 
+2025-01-13 10:35:35 INFO Script to update external persons in pure from ricgraph has started
+2025-01-13 10:35:35 INFO The script performs the following steps:
+1. **Person Root Node Retrieval**: Retrieves all person-root nodes from Ricgraph for the selected faculty and fetches the associated person IDs.
+2. **Enrichment Check**: Checks if each external person already has the required identifiers in Pure. Prepares to update missing information if needed.
+3. **Update file**: Produces a file with all of the persons that can be updated, with the new ids. after the first part is finished, you can access that file. You must check that file, and remove unwanted updates
+4. **Person Data Update**: After you have checked the file a new button appears that sends the updates to pure.
+
+**Note:** The process may take a while before log items appear on the screen, especially if a large faculty is chosen.
+2025-01-13 10:35:35 INFO start fetching person-roots for uu faculty: information & technology services|organization_name
+2025-01-13 10:35:35 INFO Start fetching research outputs from Pure API
+2025-01-13 10:35:38 INFO Total matching research outputs found: 19
+2025-01-13 10:35:40 INFO Total number of works fetched from Open Alex: 34
+2025-01-13 10:35:40 INFO total persons matched: 84
+2025-01-13 10:35:40 INFO start fetching external persons from pure
+2025-01-13 10:35:41 INFO end fetching pure
+2025-01-13 10:35:41 INFO Matching external persons found: 25
+2025-01-13 10:35:41 INFO start updating external persons from pure
+2025-01-13 10:35:41 INFO Saved 6 persons to output/external_persons/to_be_updated.json
+2025-01-13 10:35:41 INFO Saved 6 rows to output/external_persons/ext_pers_update.csv
+2025-01-13 10:35:41 INFO total external persons that can be updated: 6
+2025-01-13 10:35:41 INFO total external persons that cannot be updated (already has ids, or no ids found): 78
+2025-01-13 10:35:41 INFO Script import research output part 1 has ended, 
+2025-01-13 10:36:14 INFO Script to update external persons in pure from ricgraph has started
+2025-01-13 10:36:14 INFO The script performs the following steps:
+1. **Person Root Node Retrieval**: Retrieves all person-root nodes from Ricgraph for the selected faculty and fetches the associated person IDs.
+2. **Enrichment Check**: Checks if each external person already has the required identifiers in Pure. Prepares to update missing information if needed.
+3. **Update file**: Produces a file with all of the persons that can be updated, with the new ids. after the first part is finished, you can access that file. You must check that file, and remove unwanted updates
+4. **Person Data Update**: After you have checked the file a new button appears that sends the updates to pure.
+
+**Note:** The process may take a while before log items appear on the screen, especially if a large faculty is chosen.
+2025-01-13 10:36:14 INFO start fetching person-roots for uu faculty: information & technology services|organization_name
+2025-01-13 10:36:26 INFO Total number of works fetched from Open Alex: 34
+2025-01-13 10:36:26 INFO total persons matched: 94
+2025-01-13 10:36:26 INFO start fetching external persons from pure
+2025-01-13 10:36:26 INFO end fetching pure
+2025-01-13 10:36:26 INFO Matching external persons found: 33
+2025-01-13 10:36:26 INFO start updating external persons from pure
+2025-01-13 10:36:27 INFO Saved 20 persons to output/external_persons/to_be_updated.json
+2025-01-13 10:36:27 INFO Saved 20 rows to output/external_persons/ext_pers_update.csv
+2025-01-13 10:36:27 INFO total external persons that can be updated: 20
+2025-01-13 10:36:27 INFO total external persons that cannot be updated (already has ids, or no ids found): 74
+2025-01-13 10:36:27 INFO Script import research output part 1 has ended, 
+2025-01-13 10:38:09 INFO Script to update external persons in pure from ricgraph has started
+2025-01-13 10:38:09 INFO The script performs the following steps:
+1. **Person Root Node Retrieval**: Retrieves all person-root nodes from Ricgraph for the selected faculty and fetches the associated person IDs.
+2. **Enrichment Check**: Checks if each external person already has the required identifiers in Pure. Prepares to update missing information if needed.
+3. **Update file**: Produces a file with all of the persons that can be updated, with the new ids. after the first part is finished, you can access that file. You must check that file, and remove unwanted updates
+4. **Person Data Update**: After you have checked the file a new button appears that sends the updates to pure.
+
+**Note:** The process may take a while before log items appear on the screen, especially if a large faculty is chosen.
+2025-01-13 10:38:09 INFO start fetching external persons for uu faculty: information & technology services|organization_name
+2025-01-13 10:38:16 INFO Total number of works fetched from Open Alex: 34
+2025-01-13 10:38:16 INFO total persons matched: 120
+2025-01-13 10:38:16 INFO start fetching external persons from pure
+2025-01-13 10:38:17 INFO Matching external persons found: 43
+2025-01-13 10:38:17 INFO start updating external persons from pure
+2025-01-13 10:38:17 INFO Saved 23 persons to output/external_persons/to_be_updated.json
+2025-01-13 10:38:17 INFO Saved 23 rows to output/external_persons/ext_pers_update.csv
+2025-01-13 10:38:17 INFO total external persons that can be updated: 23
+2025-01-13 10:38:17 INFO total external persons that cannot be updated (already has ids, or no ids found): 97
+2025-01-13 10:38:17 INFO Script import research output part 1 has ended, 
+2025-01-13 10:42:27 INFO Script to update external persons in pure from ricgraph has started
+2025-01-13 10:42:27 INFO The script performs the following steps:
+1. **Person Root Node Retrieval**: Retrieves all person-root nodes from Ricgraph for the selected faculty and fetches the associated person IDs.
+2. **Enrichment Check**: Checks if each external person already has the required identifiers in Pure. Prepares to update missing information if needed.
+3. **Update file**: Produces a file with all of the persons that can be updated, with the new ids. after the first part is finished, you can access that file. You must check that file, and remove unwanted updates
+4. **Person Data Update**: After you have checked the file a new button appears that sends the updates to pure.
+
+**Note:** The process may take a while before log items appear on the screen, especially if a large faculty is chosen.
+2025-01-13 10:42:27 INFO start fetching external persons for uu faculty: information & technology services|organization_name
+2025-01-13 10:42:35 INFO total external persons found: 118
+2025-01-13 10:42:35 INFO start fetching external persons from pure
+2025-01-13 10:42:37 INFO start updating external persons from pure
+2025-01-13 10:42:37 INFO Saved 22 persons to output/external_persons/to_be_updated.json
+2025-01-13 10:42:37 INFO Saved 22 rows to output/external_persons/ext_pers_update.csv
+2025-01-13 10:42:37 INFO total external persons that can be updated: 22
+2025-01-13 10:42:37 INFO total external persons that cannot be updated (already has ids, or no ids found): 96
+2025-01-13 10:42:37 INFO Script import research output part 1 has ended, 
+2025-01-13 10:42:56 INFO Script to update external persons in pure from ricgraph has started
+2025-01-13 10:42:56 INFO The script performs the following steps:
+1. **Person Root Node Retrieval**: Retrieves all person-root nodes from Ricgraph for the selected faculty and fetches the associated person IDs.
+2. **Enrichment Check**: Checks if each external person already has the required identifiers in Pure. Prepares to update missing information if needed.
+3. **Update file**: Produces a file with all of the persons that can be updated, with the new ids. after the first part is finished, you can access that file. You must check that file, and remove unwanted updates
+4. **Person Data Update**: After you have checked the file a new button appears that sends the updates to pure.
+
+**Note:** The process may take a while before log items appear on the screen, especially if a large faculty is chosen.
+2025-01-13 10:42:56 INFO start fetching external persons for uu faculty: information & technology services|organization_name
+2025-01-13 10:43:04 INFO total external persons found: 118
+2025-01-13 10:43:04 INFO start fetching external persons from pure
+2025-01-13 10:43:05 INFO start updating external persons from pure
+2025-01-13 10:43:05 INFO Saved 23 persons to output/external_persons/to_be_updated.json
+2025-01-13 10:43:05 INFO Saved 23 rows to output/external_persons/ext_pers_update.csv
+2025-01-13 10:43:05 INFO total external persons that can be updated: 23
+2025-01-13 10:43:05 INFO total external persons that cannot be updated (already has ids, or no ids found): 95
+2025-01-13 10:43:05 INFO Script import research output part 1 has ended, 
+2025-01-13 10:43:19 INFO Script to update external persons in pure from ricgraph has started
+2025-01-13 10:43:19 INFO The script performs the following steps:
+1. **Person Root Node Retrieval**: Retrieves all person-root nodes from Ricgraph for the selected faculty and fetches the associated person IDs.
+2. **Enrichment Check**: Checks if each external person already has the required identifiers in Pure. Prepares to update missing information if needed.
+3. **Update file**: Produces a file with all of the persons that can be updated, with the new ids. after the first part is finished, you can access that file. You must check that file, and remove unwanted updates
+4. **Person Data Update**: After you have checked the file a new button appears that sends the updates to pure.
+
+**Note:** The process may take a while before log items appear on the screen, especially if a large faculty is chosen.
+2025-01-13 10:43:19 INFO start fetching external persons for uu faculty: faculteit rebo|organization_name
+2025-01-13 10:46:09 INFO total external persons found: 2400
+2025-01-13 10:46:09 INFO start fetching external persons from pure
+2025-01-13 10:46:15 INFO start updating external persons from pure
+2025-01-13 10:46:15 INFO Saved 636 persons to output/external_persons/to_be_updated.json
+2025-01-13 10:46:15 INFO Saved 636 rows to output/external_persons/ext_pers_update.csv
+2025-01-13 10:46:15 INFO total external persons that can be updated: 636
+2025-01-13 10:46:15 INFO total external persons that cannot be updated (already has ids, or no ids found): 1764
+2025-01-13 10:46:15 INFO Script import research output part 1 has ended, 
+2025-01-13 10:48:47 INFO Script to update researchoutput in pure from ricgraph has started
+2025-01-13 10:48:47 INFO Processing faculty: uu faculty: faculteit rebo|organization_name
+2025-01-13 10:48:53 INFO research output selected in ricgraph, not in pure:  1939
+2025-01-13 10:49:01 INFO Formatting the output in Pure needed JSON format. This is a slow process, you might want to get some coffee...
+2025-01-13 10:52:06 INFO Script to update researchoutput in pure from ricgraph has started
+2025-01-13 10:52:06 INFO Processing faculty: uu faculty: faculteit rebo|organization_name
+2025-01-13 10:52:12 INFO research output selected in ricgraph, not in pure:  1939
+2025-01-13 10:52:20 INFO Formatting the output in Pure needed JSON format. This is a slow process, you might want to get some coffee...
+2025-01-13 10:56:30 ERROR No internal contributors found in Pure for the research output.
+2025-01-13 11:00:17 INFO Script to update researchoutput in pure from ricgraph has started
+2025-01-13 11:00:17 INFO Processing faculty: uu faculty: faculteit rebo|organization_name
+2025-01-13 11:00:23 INFO research output selected in ricgraph, not in pure:  1939
+2025-01-13 11:00:32 INFO Formatting the output in Pure needed JSON format. This is a slow process, you might want to get some coffee...
+2025-01-13 11:13:35 INFO Script to update researchoutput in pure from ricgraph has started
+2025-01-13 11:13:35 INFO Processing faculty: uu faculty: faculteit rebo|organization_name
+2025-01-13 11:13:41 INFO research output selected in ricgraph, not in pure:  1939
+2025-01-13 11:13:50 INFO Formatting the output in Pure needed JSON format. This is a slow process, you might want to get some coffee...
+2025-01-13 11:52:10 INFO 105 items cannot be imported in pure, see log for more info
+2025-01-13 11:52:10 INFO 643 items can be updated
+2025-01-13 11:52:10 INFO 1102 items are already in pure
+2025-01-13 11:52:10 INFO Research output that can be imported are in file: output/research_output/output_to_be_updated.json
+2025-01-13 11:52:10 INFO Please open that file to check if you want them all to be updated
+2025-01-13 11:52:10 INFO if not, please remove the 'X' for that row in the column 'to_be_updated'
+2025-01-13 11:52:10 INFO Script part 1 to import research output in pure from ricgraph has ended
+2025-01-13 11:52:10 INFO Please look at the update file and uncheck items you do not want to be imported, then proceed to import them in pure via *Apply Update to Pure*
+2025-01-13 13:56:07 INFO Script to update external organisations in pure from ricgraph has started
+2025-01-13 13:58:43 INFO start fetching external orgs from pure
+2025-01-13 13:58:43 INFO Finding ext orgs for batch 1/28, 10 DOIs per batch.
+2025-01-13 13:58:44 INFO Finding ext orgs for batch 2/28, 10 DOIs per batch.
+2025-01-13 13:58:45 INFO Finding ext orgs for batch 3/28, 10 DOIs per batch.
+2025-01-13 13:58:47 INFO Finding ext orgs for batch 4/28, 10 DOIs per batch.
+2025-01-13 13:58:48 INFO Finding ext orgs for batch 5/28, 10 DOIs per batch.
+2025-01-13 13:58:48 INFO Finding ext orgs for batch 6/28, 10 DOIs per batch.
+2025-01-13 13:58:49 INFO Finding ext orgs for batch 7/28, 10 DOIs per batch.
+2025-01-13 13:58:50 INFO Finding ext orgs for batch 8/28, 10 DOIs per batch.
+2025-01-13 13:58:51 INFO Finding ext orgs for batch 9/28, 10 DOIs per batch.
+2025-01-13 13:58:52 INFO Finding ext orgs for batch 10/28, 10 DOIs per batch.
+2025-01-13 13:58:52 INFO Finding ext orgs for batch 11/28, 10 DOIs per batch.
+2025-01-13 13:58:53 INFO Finding ext orgs for batch 12/28, 10 DOIs per batch.
+2025-01-13 13:58:54 INFO Finding ext orgs for batch 13/28, 10 DOIs per batch.
+2025-01-13 13:58:54 INFO Finding ext orgs for batch 14/28, 10 DOIs per batch.
+2025-01-13 13:58:55 INFO Finding ext orgs for batch 15/28, 10 DOIs per batch.
+2025-01-13 13:58:56 INFO Finding ext orgs for batch 16/28, 10 DOIs per batch.
+2025-01-13 13:58:57 INFO Finding ext orgs for batch 17/28, 10 DOIs per batch.
+2025-01-13 13:58:58 INFO Finding ext orgs for batch 18/28, 10 DOIs per batch.
+2025-01-13 13:58:58 INFO Finding ext orgs for batch 19/28, 10 DOIs per batch.
+2025-01-13 13:58:59 INFO Finding ext orgs for batch 20/28, 10 DOIs per batch.
+2025-01-13 13:59:00 INFO Finding ext orgs for batch 21/28, 10 DOIs per batch.
+2025-01-13 13:59:00 INFO Finding ext orgs for batch 22/28, 10 DOIs per batch.
+2025-01-13 13:59:01 INFO Finding ext orgs for batch 23/28, 10 DOIs per batch.
+2025-01-13 13:59:02 INFO Finding ext orgs for batch 24/28, 10 DOIs per batch.
+2025-01-13 13:59:03 INFO Finding ext orgs for batch 25/28, 10 DOIs per batch.
+2025-01-13 13:59:03 INFO Finding ext orgs for batch 26/28, 10 DOIs per batch.
+2025-01-13 13:59:04 INFO Finding ext orgs for batch 27/28, 10 DOIs per batch.
+2025-01-13 13:59:04 INFO Finding ext orgs for batch 28/28, 10 DOIs per batch.
+2025-01-13 13:59:05 INFO Total matching external orgs found: 280
+2025-01-13 13:59:05 INFO start fetching organizations in open alex
+2025-01-13 13:59:16 INFO end fetching organizations in open alex
+2025-01-13 13:59:16 INFO nr of ext orgs that can be  updated: 323
