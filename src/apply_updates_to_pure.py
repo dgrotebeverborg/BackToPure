@@ -258,6 +258,7 @@ def process_datasets(filename, csv_file, big_json_data):
         # Reorder the columns to make 'updated' the second column
     cols = list(csv_file.columns)
     cols.insert(1, cols.pop(cols.index('updated')))
+
     csv_file = csv_file[cols]
 
     # Save the updated DataFrame
