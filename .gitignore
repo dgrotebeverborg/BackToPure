@@ -1,2 +1,13 @@
 src/config.ini
 src/research_outputs.json
+
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+
+# Ignore logs
+logs/
+*.log
+
+# Temporary/lock files
+*.lock
