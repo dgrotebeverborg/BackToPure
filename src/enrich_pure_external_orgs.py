@@ -67,6 +67,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 def match_organizations(pure_orgs, openalex_orgs, ):
     # Initialize the new list to store the organizations to update
     orgs_to_update = []
+    orgs_with_ror_in_pure = []
 
     # Loop over each organization in pure_orgs
     for pure_org in pure_orgs:
@@ -81,18 +82,28 @@ def match_organizations(pure_orgs, openalex_orgs, ):
             # Check if the Pure organization name matches the OpenAlex display name or any of its alternatives
             if pure_org_name == openalex_display_name or pure_org_name in openalex_alternatives:
                 # If a match is found, create a dictionary with the required details
-                matched_org = {
-                    'uuid': pure_org['uuid'],  # Pure organization UUID
-                    'openalex_id': openalex_org['openalex_id'],  # OpenAlex organization ID
-                    "ror": openalex_org['ror'],
-                    'geo': openalex_org['geo']  # Geographic information from OpenAlex
-                }
-                # Append the matched organization to the orgs_to_update list
-                orgs_to_update.append(matched_org)
-                break  # Exit the inner loop since a match is found for this Pure organization
+
+                # Extract ROR IDs from pure_org
+                pure_ror_ids = {identifier['id'] for identifier in pure_org['identifiers'] if
+                                identifier['name'] == 'ROR ID'}
+
+                # Check if OpenAlex ROR is in the Pure ROR IDs
+                if openalex_org['ror'] not in pure_ror_ids:
+                    # Create the matched organization dictionary
+                    matched_org = {
+                        'uuid': pure_org['uuid'],  # Pure organization UUID
+                        'openalex_id': openalex_org['openalex_id'],  # OpenAlex organization ID
+                        "ror": openalex_org['ror'],  # ROR ID from OpenAlex
+                        'geo': openalex_org['geo']  # Geographic information from OpenAlex
+                    }
+                    # Append the matched organization to the list
+                    orgs_to_update.append(matched_org)
+                    break  # Exit the inner loop since a match is found for this Pure organization
+                else:
+                    orgs_with_ror_in_pure.append(pure_org)
 
 
-    return orgs_to_update
+    return orgs_to_update, orgs_with_ror_in_pure
 
 def match_orgs_oa_pure(oa_article, pure_article, article_orgs, uuids, oa_ids):
     # Initialize a dictionary to store unique institutions
@@ -170,10 +181,8 @@ def update_externalorg_pure(orgs, test_choice, update):
 
     adapter = HTTPAdapter(max_retries=retry_strategy)
 
-    # Directory to save the output files
-    output_dir = "output/external_orgs"
-    os.makedirs(output_dir, exist_ok=True)
 
+    inpure = False
     # Initialize a list to store rows for the DataFrame
     rows_to_update = []
 
@@ -220,19 +229,15 @@ def update_externalorg_pure(orgs, test_choice, update):
                 'uuid': row['uuid'],
                 'ror': row['ror']
             })
-
             # Add the JSON to the big JSON list
+            data['identifiers'].append(new_ror)
             json_updates.append(data)
+        else:
+            inpure = True
 
         session.close()
 
-    # Save the DataFrame
-    df = pd.DataFrame(rows_to_update)
-    df.to_csv(os.path.join(output_dir, "external_orgs_to_update.csv"), index=False)
 
-    # Save the big JSON file
-    with open(os.path.join(output_dir, "external_orgs_updates.json"), 'w') as json_file:
-        json.dump(json_updates, json_file, indent=4)
     # for row in orgs:
     #     session = requests.Session()
     #     session.mount("https://", adapter)
@@ -275,7 +280,7 @@ def update_externalorg_pure(orgs, test_choice, update):
     #             session.close()
 
 
-    return update
+    return update, inpure, rows_to_update, json_updates
 
 
 
@@ -468,15 +473,11 @@ def get_ext_orgdata_pure(external_organization_uuids, pure_org_data):
 
 
         if data:
-
-
             # Extract the required information
             org_name = data.get('name', {}).get('en_GB', '')  # English name
             org_uuid = data.get('uuid', '')  # UUID
-
             # Extract identifiers (name and id)
             identifiers = []
-
             for identifier in data.get('identifiers', []):
                 id_name = identifier.get('type', {}).get('term', {}).get(
                     'en_GB') if 'type' in identifier else identifier.get('idSource')
@@ -545,7 +546,7 @@ def main(faculty_choice, test_choice):
     researchoutputs = select_persons_researchoutput(faculties)
     purejsons = enrich.fetch_pure_researchoutputs(researchoutputs)
     openalexjsons = enrich.fetch_openalex_works(researchoutputs)
-
+    rorsuiids =[]
     update = 0
     article_orgs = []
     # Initialize sets for unique UUIDs and unique institutions
@@ -556,21 +557,40 @@ def main(faculty_choice, test_choice):
         article_orgs, uuids, oa_ids = mainproces(doi, purejsons, openalexjsons, article_orgs, uuids, oa_ids)
 
     pure_orgsjsons = fetch_pure_extorgs(uuids)
-
+    notupdate = 0
     openalex_orgjsons = fetch_openalex_rors(oa_ids)
+    all_rows_toupdate = []
+    all_jsons_update =[]
+
     all_orgs_to_update = []
+    orgs_with_ror_in_pure = []
     for article in article_orgs:
          pure_org_details = get_ext_orgdata_pure(article['external_organization_uuids'], pure_orgsjsons)
          oa_org_details = get_ext_orgdata_openalex(article['unique_institutions'], openalex_orgjsons)
-         orgs_to_update = match_organizations(pure_org_details, oa_org_details, )
+         orgs_to_update , orgs_with_ror_in_pure = match_organizations(pure_org_details, oa_org_details, )
          all_orgs_to_update.extend(orgs_to_update)
-         # for org in orgs_to_update:
-         #
-         #     # Ensure each item in orgs_to_update is a dictionary with 'uuid' and 'ror' keys
-         #     if isinstance(org, dict) and 'uuid' in org and 'ror' in org:
-         #         rorsuiids.append((org['uuid'], org['ror']))
-         # update = update_externalorg_pure(orgs_to_update, test_choice, update)
+         orgs_with_ror_in_pure.extend(orgs_with_ror_in_pure)
+
+         update, inpure, rows_to_update, json_updates  = update_externalorg_pure(orgs_to_update, test_choice, update)
+         all_rows_toupdate.extend(rows_to_update)
+         all_jsons_update.extend(json_updates)
+
+         if inpure == True:
+             notupdate = notupdate  +1
+
+
+    # Save the DataFrame
+    # Directory to save the output files
+    output_dir = "output/external_orgs"
+    os.makedirs(output_dir, exist_ok=True)
+    df = pd.DataFrame(all_rows_toupdate)
+    df.to_csv(os.path.join(output_dir, "external_orgs_to_update.csv"), index=False)
+
+    # Save the big JSON file
+    with open(os.path.join(output_dir, "external_orgs_updates.json"), 'w') as json_file:
+        json.dump(all_jsons_update, json_file, indent=4)
     logger.info(f"nr of ext orgs that can be  updated: {len(all_orgs_to_update)}")
+    logger.info(f"nr of ext orgs that already have a ror in pure: {len(orgs_with_ror_in_pure)}")
     # unique_rorsuiids = list(set(rorsuiids))
     # with open('output.csv', mode='w', newline='') as file:
     #     writer = csv.writer(file)

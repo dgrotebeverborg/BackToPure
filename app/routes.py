@@ -214,8 +214,8 @@ def init_app(app):
     def open_directory():
         # Adjust this path to your target directory
         referer = request.headers.get('Referer', 'unknown')
-        print(referer)
-        directory_path = 'ouput'
+        print('test', referer)
+        # directory_path = 'output'
         # Step 2: Execute specific logic based on the Referer
         if 'enrich_external_persons' in referer:
             directory_path = "output/external_persons"

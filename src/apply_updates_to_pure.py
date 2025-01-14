@@ -105,8 +105,6 @@ def read_directory_files(directory):
     return csv_files, json_files
 
 
-
-
 def process_internal_persons(filename, csv_file, json_data):
     """
     Processes a CSV file by looping over each row and retrieving an entry from the big JSON file
@@ -161,7 +159,7 @@ def process_internal_persons(filename, csv_file, json_data):
     csv_file = csv_file[cols]
 
     # Save the updated DataFrame to 'output/updated.csv'
-    file = 'output/internal_persons' + filename
+    file = 'output/internal_persons/' + filename
     os.makedirs('output', exist_ok=True)  # Ensure the 'output' directory exists
     csv_file.to_csv(file, index=False)
 
@@ -172,6 +170,8 @@ def process_internal_persons(filename, csv_file, json_data):
 def find_json_by_uuid(pure_uuid, json_data):
     for record in json_data:
         if record.get('UUID') == pure_uuid:
+            return record
+        if record.get('uuid') == pure_uuid:
             return record
     return None
 
@@ -202,9 +202,10 @@ def process_external_persons(filename, csv_file, big_json_data):
     csv_file = csv_file[cols]
 
     # Save the updated DataFrame to 'output/updated.csv'
-    file = 'output/external_persons' + filename
+    file = 'output/external_persons/' + filename
     os.makedirs('output', exist_ok=True)  # Ensure the 'output' directory exists
     csv_file.to_csv(file, index=False)
+
 
 
 def process_research_output(filename, csv_file, big_json_data):
@@ -230,8 +231,8 @@ def process_research_output(filename, csv_file, big_json_data):
     csv_file = csv_file[cols]
 
     # Save the updated DataFrame
-    file = 'output/datasets/' + filename
-    os.makedirs('output/datasets', exist_ok=True)  # Ensure the 'output' directory exists
+    file = 'output/research_output/' + filename
+    os.makedirs('output/research_output', exist_ok=True)  # Ensure the 'output' directory exists
     csv_file.to_csv(file, index=False)
 
 
@@ -242,12 +243,12 @@ def process_datasets(filename, csv_file, big_json_data):
     doi_to_dataset = {dataset.get("doi", {}).get("doi"): dataset for dataset in big_json_data}
 
     for index, row in filtered_csv.iterrows():
-        print(row['doi'])
+
         dataset = doi_to_dataset.get(row['doi'])
 
         # Output the result
         if dataset:
-            print('daar')
+
             puda.create_dataset(dataset)
             csv_file.loc[index, 'updated'] = 'x'
             csv_file.loc[index, 'to_be_updated'] = ''  # Clear 'to_be_updated' for successfully updated rows
@@ -267,6 +268,47 @@ def process_datasets(filename, csv_file, big_json_data):
     csv_file.to_csv(file, index=False)
 
 
+
+def process_external_orgs(filename, csv_file, big_json_data):
+    # Filter the DataFrame to only consider rows where 'to_be_updated' is 'X'
+    filtered_csv = csv_file[csv_file['to_be_updated'] == 'X']
+
+
+    for index, row in filtered_csv.iterrows():
+        uuid = row['uuid']
+
+        # print(big_json_data)
+        matched_record = find_json_by_uuid(uuid, big_json_data)
+        # print('test', matched_record)
+        if matched_record:
+
+            url = PURE_BASE_URL + 'external-organizations/' + row['uuid']
+
+            try:
+                response = session.put(url, headers=headers, json=matched_record, verify=False)
+
+                if response.status_code != 200:
+                    logger.info(f"Failed to update data for UUID {uuid}: {response.text}")
+                else:
+                    csv_file.loc[index, 'updated'] = 'X'
+                    csv_file.loc[index, 'to_be_updated'] = ''  # Clear 'to_be_updated' for successfully updated rows
+                    logger.debug(f"Successfully updated data for UUID {uuid}")
+            except Exception as e:
+                logger.error(f"Error updating UUID {uuid}: {e}")
+            time.sleep(0.1)  # Adjust the sleep time based on rate limits
+
+    # Reorder the columns to make 'updated' the second column
+    cols = list(csv_file.columns)
+    cols.insert(1, cols.pop(cols.index('updated')))
+    csv_file = csv_file[cols]
+
+    # Save the updated DataFrame to 'output/updated.csv'
+    file = 'output/external_orgs/' + filename
+    os.makedirs('output', exist_ok=True)  # Ensure the 'output' directory exists
+    csv_file.to_csv(file, index=False)
+
+
+
 if __name__ == "__main__":
 
     # Step 1: Retrieve the REFERER_PAGE environment variable
@@ -280,7 +322,7 @@ if __name__ == "__main__":
         directory = "output/external_persons"
     elif 'enrich_internal_persons_with_ids' in referer_page:
         directory = "output/internal_persons"
-    elif 'enrich_externa_orgs.html' in referer_page:
+    elif 'enrich_external_orgs' in referer_page:
         directory = "output/external_orgs"
     elif 'import_datasets' in referer_page:
         directory = "output/datasets"
@@ -298,6 +340,7 @@ if __name__ == "__main__":
             elif 'import_research_outputs' in referer_page:
                 process_research_output(filename, csv_file, big_json_data)
             elif 'import_datasets' in referer_page:
-
                 process_datasets(filename, csv_file, big_json_data)
+            elif 'enrich_external_orgs' in referer_page:
+                process_external_orgs(filename, csv_file, big_json_data)
     logger.info(f"script to update Pure has ended")
