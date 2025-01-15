@@ -317,7 +317,7 @@ def construct_research_output_json(row):
             "versionType": {"uri": "/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion"}
         }],
         "keywordGroups":  row['keywords'],
-        "links": [{"url": f"{row['doi']}"}],
+        # "links": [{"url": f"{row['doi']}"}],
         "visibility": {"key": row['visibility_key']},
         "workflow": {"step": row['workflow_step']},
         "identifiers": [
@@ -598,6 +598,26 @@ def unique_fields_per_type(row):
 
 def format_rest(row):
     row['keywords'] = parse_keywords(row['keywords'])
+
+    # doi
+    row['electronic_version'] = {
+        "typeDiscriminator": "DoiElectronicVersion",
+        "accessType": {
+            "uri": "/dk/atira/pure/core/openaccesspermission/unknown",
+            "term": {
+                "en_GB": "unknown"
+            }
+        },
+        "visibleOnPortalDate": row['publication_date'],
+        "doi": row['doi'],
+        "versionType": {
+            "uri": "/dk/atira/pure/researchoutput/electronicversion/versiontype/publishersversion",
+            "term": {
+                "en_GB": "Final published version"
+            }
+        }
+    }
+
     return row
 
 

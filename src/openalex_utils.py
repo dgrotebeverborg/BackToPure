@@ -97,6 +97,7 @@ def transform_openalex_to_df(openalex_data):
 
         type = publication.get('type')
         doi = publication.get('doi')
+        doi = doi.split("doi.org/")[1]
         language = publication.get('language')
         publication_date = publication.get('publication_date', '')
         year, month, day = extract_date_components(publication_date)

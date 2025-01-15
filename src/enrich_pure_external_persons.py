@@ -664,7 +664,7 @@ def fetch_openalex_works(dois):
     # Combine all works into one JSON object
     openalexworks = {"results": all_works} if all_works else {}
 
-    # Log the total number of works fetched
+    # Log the total number Striof works fetched
     logger.debug(f"Total number of works fetched from Open Alex: {len(all_works)}")
 
 
