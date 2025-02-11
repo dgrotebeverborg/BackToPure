@@ -123,7 +123,7 @@ def select_persons(faculties, faculty_choice):
         persondf['PURE_UUID_PERS'] = pd.NA
 
     file_path = f"output/internal_persons/allpersons_{datetimetoday}.csv"
-    persondf.to_csv(file_path, index=False)
+    # persondf.to_csv(file_path, index=False)
     return persondf
 
 def update_person(new_ids, data, api_url):
@@ -298,7 +298,7 @@ def update_persons(person_df, datatotal):
     # Save the DataFrames to CSV
 
     new_df.to_csv(new_ids_filename, index=False)
-    no_new_ids_df.to_csv(no_new_ids_filename, index=False)
+    # no_new_ids_df.to_csv(no_new_ids_filename, index=False)
     logger.info(f"Persons without new IDs saved to {no_new_ids_filename}")
 
 

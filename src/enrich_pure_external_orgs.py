@@ -564,11 +564,17 @@ def main(faculty_choice, test_choice):
 
     all_orgs_to_update = []
     orgs_with_ror_in_pure = []
+    count = 0
     for article in article_orgs:
+
+         count += 1
+         if count % 25 == 0:
+            logger.info(f"Processed {str(count)} batch")
          pure_org_details = get_ext_orgdata_pure(article['external_organization_uuids'], pure_orgsjsons)
          oa_org_details = get_ext_orgdata_openalex(article['unique_institutions'], openalex_orgjsons)
          orgs_to_update , orgs_with_ror_in_pure = match_organizations(pure_org_details, oa_org_details, )
          all_orgs_to_update.extend(orgs_to_update)
+
          orgs_with_ror_in_pure.extend(orgs_with_ror_in_pure)
 
          update, inpure, rows_to_update, json_updates  = update_externalorg_pure(orgs_to_update, test_choice, update)
@@ -591,10 +597,11 @@ def main(faculty_choice, test_choice):
         json.dump(all_jsons_update, json_file, indent=4)
     logger.info(f"nr of ext orgs that can be  updated: {len(all_orgs_to_update)}")
     logger.info(f"nr of ext orgs that already have a ror in pure: {len(orgs_with_ror_in_pure)}")
-    # unique_rorsuiids = list(set(rorsuiids))
-    # with open('output.csv', mode='w', newline='') as file:
-    #     writer = csv.writer(file)
-    #     writer.writerows(unique_rorsuiids)
+    unique_rorsuiids = list(set(rorsuiids))
+    with open('output.csv', mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(unique_rorsuiids)
+
 
 
 # ########################################################################

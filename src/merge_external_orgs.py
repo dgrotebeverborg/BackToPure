@@ -33,6 +33,31 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Initialize an empty list to store rows
 rors = []
+
+def merge_external_orgs(final_result):
+    items = []
+    for ror_url, uuid_list in final_result.items():
+        for uuid_ in uuid_list:
+            items.append({
+                "uuid": uuid_,
+                "systemName": "ExternalOrganization"
+            })
+
+    # Final payload
+    payload = {
+        "items": items
+    }
+
+    url = "https://staging.research-portal.uu.nl/ws/api/external-organizations/merge"
+    headers = {
+        "accept": "application/json",
+        "api-key": PURE_API_KEY,  # Replace with your actual API key
+        "content-type": "application/json"
+    }
+
+    response = requests.post(url, headers=headers, json=payload)
+    print(response.status_code)
+    print(response.text)
 def fetch_org_data(rors, batch_size):
     """
     Fetch person data from the Pure API in batches and combine the results.
@@ -56,6 +81,7 @@ def fetch_org_data(rors, batch_size):
     for offset in range(0, total_records, batch_size):
         batch = rors[offset:offset + batch_size]
         pipe_separated_rors = "|".join(batch)
+
         json_data = {'searchString': pipe_separated_rors, 'size': len(batch), 'offset': 0}
         url = PURE_BASE_URL + 'external-organizations/search/'
 
@@ -70,7 +96,9 @@ def fetch_org_data(rors, batch_size):
         except requests.exceptions.RequestException as e:
             logger.error(f"API request failed for offset {offset}: {e}")
 
+
     logger.info(f"total ext orgs found in pure:  {str(total_found)}")
+
     with open('extorgs.json', "w") as f:
         json.dump(datatotal, f, indent=4)
 
@@ -78,11 +106,12 @@ def fetch_org_data(rors, batch_size):
     return datatotal
 
 # Open and read the CSV file
-with open('output.csv', mode='r') as file:
+with open('external_orgs_to_update.csv', mode='r') as file:
     reader = csv.reader(file)
     for row in reader:
+
         if len(row) > 1:
-            rors.append(row[1])  # Index 1 corresponds to the second column
+            rors.append(row[3])  # Index 1 corresponds to the second column
 
 datatotal = fetch_org_data(rors, 20)
 
@@ -90,6 +119,7 @@ datatotal = fetch_org_data(rors, 20)
 result = []
 for entry in datatotal:
     uuid = entry.get('uuid')
+
     ror_ids = [identifier['id'] for identifier in entry.get('identifiers', [])
                if identifier.get('type') and identifier['type']['term'].get('en_GB') == 'ROR ID']
 
@@ -110,7 +140,8 @@ for item in result:
 final_result = {ror: list(uuids) for ror, uuids in clustered_result.items() if len(uuids) > 1}
 
 
-
+print(final_result)
+# merge_external_orgs(final_result)
 
 # Save JSON to file
 with open('exorgs.json', 'w') as file:
